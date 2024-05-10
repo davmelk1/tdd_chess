@@ -1,8 +1,6 @@
-//
-// Created by davit on 5/9/24.
-//
+#pragma once
 
-#ifndef TDD_CHESS_TEST_H
-#define TDD_CHESS_TEST_H
+#include <gtest/gtest.h>
 
-#endif //TDD_CHESS_TEST_H
+#include "cell_test.h"
+#include "board_test.h"

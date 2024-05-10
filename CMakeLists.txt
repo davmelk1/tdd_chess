@@ -24,4 +24,4 @@ target_link_libraries(MyTests ${GTEST_BOTH_LIBRARIES} myTestsLibrary myLibrary -
 
 
 enable_testing()
-add_test(Name MyTests Command MyTests)
+add_test(AllTests MyTests Command MyTests)
