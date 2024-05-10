@@ -1,0 +1,7 @@
+/home/davit/Documents/tdd_chess/cmake-build-debug/CMakeFiles/myLibrary.dir
+/home/davit/Documents/tdd_chess/cmake-build-debug/CMakeFiles/myTestsLibrary.dir
+/home/davit/Documents/tdd_chess/cmake-build-debug/CMakeFiles/start_game.dir
+/home/davit/Documents/tdd_chess/cmake-build-debug/CMakeFiles/MyTests.dir
+/home/davit/Documents/tdd_chess/cmake-build-debug/CMakeFiles/test.dir
+/home/davit/Documents/tdd_chess/cmake-build-debug/CMakeFiles/edit_cache.dir
+/home/davit/Documents/tdd_chess/cmake-build-debug/CMakeFiles/rebuild_cache.dir

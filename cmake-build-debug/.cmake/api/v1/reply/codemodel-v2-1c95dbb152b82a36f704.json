@@ -1,0 +1,87 @@
+{
+	"configurations" : 
+	[
+		{
+			"directories" : 
+			[
+				{
+					"build" : ".",
+					"jsonFile" : "directory-.-Debug-f5ebdc15457944623624.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.28"
+					},
+					"projectIndex" : 0,
+					"source" : ".",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2,
+						3
+					]
+				}
+			],
+			"name" : "Debug",
+			"projects" : 
+			[
+				{
+					"directoryIndexes" : 
+					[
+						0
+					],
+					"name" : "chess",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2,
+						3
+					]
+				}
+			],
+			"targets" : 
+			[
+				{
+					"directoryIndex" : 0,
+					"id" : "MyTests::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-MyTests-Debug-e73ee4e249cd4b218951.json",
+					"name" : "MyTests",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "myLibrary::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-myLibrary-Debug-a546e6d39fa9fce8dddb.json",
+					"name" : "myLibrary",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "myTestsLibrary::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-myTestsLibrary-Debug-f36bbdac9d3afdd445ff.json",
+					"name" : "myTestsLibrary",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "start_game::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-start_game-Debug-0cd620f54be185752f33.json",
+					"name" : "start_game",
+					"projectIndex" : 0
+				}
+			]
+		}
+	],
+	"kind" : "codemodel",
+	"paths" : 
+	{
+		"build" : "/home/davit/Documents/tdd_chess/cmake-build-debug",
+		"source" : "/home/davit/Documents/tdd_chess"
+	},
+	"version" : 
+	{
+		"major" : 2,
+		"minor" : 6
+	}
+}
