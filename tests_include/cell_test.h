@@ -4,6 +4,7 @@
 
 #include "cell.h"
 #include "constants.h"
+#include "pawn.h"
 
 class CellTest : public ::testing::Test{
 public:
@@ -38,5 +39,16 @@ TEST_F(CellTest, TestSettingSize) {
 	sf::Vector2f size{constants::CELL_WIDTH, constants::CELL_WIDTH};
 	cell.set_size(size);
 	ASSERT_EQ(cell.get_size(), size);
+}
+
+TEST_F(CellTest, TestAddingPawn) {
+    auto p = new Pawn(White);
+    EXPECT_EQ(cell.get_figure_pointer(), nullptr);
+    cell.add_figure(p);
+    EXPECT_EQ(cell.get_figure_pointer(), p);
+    auto size = p->get_size();
+    auto cell_position = cell.get_position();
+    sf::Vector2f pos = {cell_position.x - size.x / 2, cell_position.y - size.y / 2};
+    EXPECT_EQ(p->get_position(), pos);
 }
 

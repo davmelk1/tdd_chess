@@ -3,6 +3,8 @@
 #include <SFML/Graphics.hpp>
 
 #include "color_enum.h"
+#include "constants.h"
+#include "figure.h"
 
 class Cell{
 public:
@@ -18,8 +20,17 @@ public:
 	void set_size(const sf::Vector2f& size);
 	
 	sf::Vector2f get_size() const;
+    
+    void set_color(ColorEnum color_);
+    
+    void draw(sf::RenderWindow& window) const;
+    
+    void add_figure(Figure* figure_pointer);
+    
+    Figure* get_figure_pointer() const;
 
 private:
 	ColorEnum color{White};
 	sf::RectangleShape cell_rectangle;
+    Figure* figure_ptr{nullptr};
 };

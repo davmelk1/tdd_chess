@@ -1,21 +1,22 @@
-#include <iostream>
+#pragma once
+
+#include <gtest/gtest.h>
 
 #include "board.h"
 
-int main() {
-    sf::RenderWindow window{{static_cast<unsigned int>(constants::WINDOW_WIDTH),
-                             static_cast<unsigned int>(constants::WINDOW_WIDTH)}, "TDD Chess"};
+TEST(TestWindow, TestBoardDrawing) {
+    sf::RenderWindow window{{800, 800}, "widnow"};
     Board board;
     while (window.isOpen()) {
         sf::Event ev;
         while (window.pollEvent(ev)) {
-            if (ev.type == sf::Event::Closed)
+            if (ev.type == sf::Event::KeyPressed) {
+                ASSERT_NE(ev.key.code, sf::Keyboard::Escape);
                 window.close();
+            }
         }
-        
         window.clear(constants::BACKGROUND_COLOR);
         board.draw(window);
         window.display();
     }
-    return 0;
 }

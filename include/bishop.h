@@ -3,7 +3,7 @@
 #include "figure.h"
 #include "color_enum.h"
 
-class Pawn : public Figure{
+class Bishop : public Figure{
 public:
-    Pawn(ColorEnum color = White);
+    Bishop(ColorEnum color = White);
 };
