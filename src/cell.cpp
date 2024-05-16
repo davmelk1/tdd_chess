@@ -128,14 +128,16 @@ void Cell::set_available() {
 
 void Cell::draw_available(sf::RenderWindow& window) const {
 	static sf::CircleShape available_circle = [&](){
-		sf::CircleShape ellipse;
-		ellipse.setRadius(get_size().x / 4);
-		ellipse.setScale(0.4 * get_size().x / ellipse.getRadius(), 0.2 * get_size().y / ellipse.getRadius());
-		ellipse.setOrigin(ellipse.getLocalBounds().width / 2, ellipse.getLocalBounds().height / 2);
-		ellipse.setFillColor({40, 200, 30 });
-		return ellipse;
+		sf::CircleShape circle;
+		circle.setRadius(get_size().x / 5);
+		circle.setOrigin(circle.getRadius(), circle.getRadius());
+		circle.setFillColor({40, 200, 30 });
+		return circle;
 	}();
-	draw_ellipse(window, available_circle);
+    auto size{get_size()};
+    auto position{get_position()};
+    available_circle.setPosition(position.x + size.x / 2, position.y + size.y / 2);
+    window.draw(available_circle);
 }
 
 void Cell::unset_available() {
