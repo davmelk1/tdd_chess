@@ -11,6 +11,8 @@ public:
 	Cell cell;
 };
 
+class DerivedFromCell : public ::testing::Test, public Cell{};
+
 TEST(TestCreatingCells, DefaultCellCreation) {
 	Cell cell;
 }
@@ -39,6 +41,8 @@ TEST_F(CellTest, TestSettingSize) {
 	sf::Vector2f size{constants::CELL_WIDTH, constants::CELL_WIDTH};
 	cell.set_size(size);
 	ASSERT_EQ(cell.get_size(), size);
+	cell.set_size(constants::CELL_WIDTH * 2, constants::CELL_WIDTH * 2);
+	ASSERT_EQ(cell.get_size(), sf::Vector2f(constants::CELL_WIDTH * 2, constants::CELL_WIDTH * 2));
 }
 
 TEST_F(CellTest, TestAddingPawn) {
@@ -50,5 +54,13 @@ TEST_F(CellTest, TestAddingPawn) {
     auto cell_position = cell.get_position();
     sf::Vector2f pos = {cell_position.x - size.x / 2, cell_position.y - size.y / 2};
     EXPECT_EQ(p->get_position(), pos);
+}
+
+TEST_F(DerivedFromCell, TestMousePositionHoverCheckingg) {
+    set_position(10, 25);
+    set_size({45, 30});
+    EXPECT_EQ(mouse_is_on_this_cell({30, 45}), true);
+    EXPECT_EQ(mouse_is_on_this_cell({50, 12}), false);
+    EXPECT_EQ(mouse_is_on_this_cell({32, 25}), false);
 }
 

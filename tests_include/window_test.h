@@ -2,13 +2,13 @@
 
 #include <gtest/gtest.h>
 
-#include "board.h"
+#include "window.h"
 
-TEST(TestWindow, TestBoardDrawing) {
-    sf::RenderWindow window{{800, 800}, "widnow"};
-    Board board;
+class DerivedFromGameWindow : public ::testing::Test, public GameWindow{};
+
+TEST_F(DerivedFromGameWindow, TestBoardDrawing) {
     while (window.isOpen()) {
-        sf::Event ev;
+        sf::Event ev{};
         while (window.pollEvent(ev)) {
             if (ev.type == sf::Event::KeyPressed) {
                 ASSERT_NE(ev.key.code, sf::Keyboard::Escape);
@@ -17,6 +17,14 @@ TEST(TestWindow, TestBoardDrawing) {
         }
         window.clear(constants::BACKGROUND_COLOR);
         board.draw(window);
+        draw_labels();
         window.display();
     }
+}
+
+TEST_F(DerivedFromGameWindow, TestCheckingCloseEvent) {
+    sf::Event close_event{sf::Event::Closed};
+    EXPECT_EQ(close_event_appeared(close_event), true);
+    sf::Event escape_event{sf::Event::KeyPressed, sf::Keyboard::Escape};
+    EXPECT_EQ(close_event_appeared(escape_event), true);
 }

@@ -64,3 +64,11 @@ TEST_F(BoardTest, TestDefaultBoardIsInTheRightPlace) {
     ASSERT_EQ(board.get_position(), Board::calculate_board_position_from_constants());
 }
 
+TEST_F(BoardTest, TestBoardWidth) {
+    ASSERT_EQ(board.get_board_width(), constants::CELL_WIDTH * constants::BOARD_SIZE);
+}
+
+TEST_F(BoardTest, TestBoardHeight) {
+    ASSERT_EQ(board.get_board_height(), constants::CELL_WIDTH * constants::BOARD_SIZE);
+}
+
