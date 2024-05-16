@@ -11,6 +11,7 @@
 #include "bishop.h"
 #include "knight.h"
 #include "rook.h"
+#include "text.h"
 
 class Board{
 public:
@@ -34,11 +35,16 @@ public:
     float get_board_height() const;
     
     void handle_mouse_hovering(sf::Vector2i mouse_position);
+	
+	void handle_mouse_press(const sf::Event::MouseButtonEvent& event);
+	
+	void draw_labels(sf::RenderWindow& window) const;
 
 protected:
     std::array<std::array<Cell, constants::BOARD_SIZE>, constants::BOARD_SIZE> board;
 	sf::Vector2f board_start_position{};
 	int board_size{constants::BOARD_SIZE};
+	std::vector<std::pair<int, int>> available_moves;
     
     void set_position(sf::Vector2f position);
     

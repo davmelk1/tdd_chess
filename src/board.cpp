@@ -101,3 +101,43 @@ void Board::handle_mouse_hovering(sf::Vector2i mouse_position) {
             cell.handle_mouse_hovering(mouse_position);
 }
 
+void Board::handle_mouse_press(const sf::Event::MouseButtonEvent& event) {
+	if (event.button != sf::Mouse::Button::Left)
+		return;
+	for (auto& [i, j] : available_moves) {
+		board[i][j].unset_available();
+		available_moves = {};
+	}
+	Cell* pressed_cell{nullptr};
+	for (auto& row : board)
+        for (auto& cell : row)
+			cell.press(cell.cell_contains_position({event.x, event.y}));
+	for (auto& row : board)
+        for (auto& cell : row)
+			if (cell.is_pressed())
+				pressed_cell = &cell;
+	if (pressed_cell) {
+		int i = (pressed_cell - &board[0][0])/board_size;
+		available_moves = pressed_cell->get_available_moves(i,(pressed_cell - &board[i][0]));
+	}
+	for (const auto& [i,j] : available_moves)
+		board[i][j].set_available();
+}
+
+void Board::draw_labels(sf::RenderWindow& window) const {
+	auto board_position = get_position();
+	for (int i = 0; i < get_size(); ++i) {
+		Text label;
+		label.set_text(std::to_string(i + 1));
+		label.set_center_position(board_position.x + constants::CELL_WIDTH * i + constants::CELL_WIDTH / 2, board_position.y - label.get_size().y);
+		label.draw(window);
+		label.set_center_position(board_position.x + constants::CELL_WIDTH * i + constants::CELL_WIDTH / 2, board_position.y + get_board_height() + label.get_size().y);
+		label.draw(window);
+		label.set_text({char('A' + i)});
+		label.set_center_position(board_position.x - 25, board_position.y + i * constants::CELL_WIDTH + constants::CELL_WIDTH / 2);
+		label.draw(window);
+		label.set_center_position(board_position.x + get_board_width() + 25, board_position.y + i * constants::CELL_WIDTH + constants::CELL_WIDTH / 2);
+		label.draw(window);
+	}
+}
+

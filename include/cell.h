@@ -34,6 +34,19 @@ public:
     Figure* get_figure_pointer() const;
     
     void handle_mouse_hovering(const sf::Vector2i& pos);
+	
+	bool cell_contains_position(const sf::Vector2i& pos);
+	
+	void press(bool b);
+	
+	bool is_pressed() const;
+	
+	std::vector<std::pair<int, int>> get_available_moves(int i, int j);
+	
+	void set_available();
+	
+	void unset_available();
+
 protected:
     ColorEnum color{White};
     sf::RectangleShape cell_rectangle;
@@ -44,4 +57,14 @@ protected:
     bool is_hovered{false};
     
     void draw_hover_ellipse(sf::RenderWindow& window) const;
+    
+	bool is_cell_pressed{false};
+	
+	void draw_press_ellipse(sf::RenderWindow& window) const;
+	
+	void draw_ellipse(sf::RenderWindow& window, sf::CircleShape& ellipse) const;
+	
+	bool is_available{false};
+	
+	void draw_available(sf::RenderWindow& window) const;
 };

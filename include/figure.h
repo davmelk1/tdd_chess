@@ -16,6 +16,8 @@ public:
     sf::Vector2f get_size() const;
     
     void draw(sf::RenderWindow& window) const;
+	
+	virtual std::vector<std::pair<int, int>> get_all_available_moves(int i, int j) const {return {};};
 protected:
     sf::Sprite sprite;
     sf::Texture texture;

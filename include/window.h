@@ -1,7 +1,6 @@
 #pragma once
 
 #include "board.h"
-#include "text.h"
 
 class GameWindow{
 public:
@@ -25,8 +24,6 @@ protected:
     void draw_and_display();
     
     void draw_widgets();
-    
-    void draw_labels();
-    
-    void handle_events();
+	
+	void handle_events();
 };

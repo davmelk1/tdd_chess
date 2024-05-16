@@ -64,3 +64,44 @@ TEST_F(DerivedFromCell, TestMousePositionHoverCheckingg) {
     EXPECT_EQ(mouse_is_on_this_cell({32, 25}), false);
 }
 
+TEST_F(DerivedFromCell, TestIfCellContainsClickPosition) {
+    set_position(10, 25);
+    set_size({45, 30});
+    EXPECT_EQ(cell_contains_position({30, 45}), true);
+    EXPECT_EQ(cell_contains_position({50, 12}), false);
+    EXPECT_EQ(cell_contains_position({32, 25}), false);
+}
+
+TEST_F(DerivedFromCell, TestClickingOnTheCell) {
+	set_position(10, 25);
+    set_size({45, 30});
+	press(cell_contains_position({40, 50}));
+	ASSERT_TRUE(is_pressed());
+}
+
+TEST_F(DerivedFromCell, TestClickingOutsideTheCell) {
+	set_position(10, 25);
+    set_size({45, 30});
+	press(cell_contains_position({40, 50}));
+	ASSERT_TRUE(is_pressed());
+	press(cell_contains_position({100, 50}));
+	ASSERT_FALSE(is_pressed());
+}
+
+TEST_F(DerivedFromCell, TestDoubleClickingOnTheCell) {
+	set_position(10, 25);
+    set_size({45, 30});
+	press(cell_contains_position({40, 50}));
+	EXPECT_TRUE(is_pressed());
+	press(cell_contains_position({40, 30}));
+	EXPECT_FALSE(is_pressed());
+}
+
+TEST_F(DerivedFromCell, TestAvailableMovesForWhitePawn) {
+	set_position(10, 25);
+    set_size({45, 30});
+	press(cell_contains_position({40, 50}));
+	EXPECT_TRUE(is_pressed());
+	press(cell_contains_position({40, 30}));
+	EXPECT_FALSE(is_pressed());
+}

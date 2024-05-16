@@ -22,9 +22,11 @@ void GameWindow::handle_events() {
             case sf::Event::MouseMoved:
                 board.handle_mouse_hovering({ev.mouseMove.x, ev.mouseMove.y});
                 break;
+			case sf::Event::MouseButtonPressed:
+				board.handle_mouse_press(ev.mouseButton);
+				break;
             default:
                 break;
-                
         }
     }
 }
@@ -47,29 +49,12 @@ bool GameWindow::is_escape_pressed(const sf::Event& ev) {
 
 void GameWindow::draw_and_display() {
     draw_widgets();
-    draw_labels();
     window.display();
 }
 
 void GameWindow::draw_widgets() {
     window.clear(constants::BACKGROUND_COLOR);
     board.draw(window);
-}
-
-void GameWindow::draw_labels() {
-    auto board_position = board.get_position();
-    for (int i = 0; i < board.get_size(); ++i) {
-        Text label;
-        label.set_text(std::to_string(i + 1));
-        label.set_center_position(board_position.x + constants::CELL_WIDTH * i + constants::CELL_WIDTH / 2, board_position.y - label.get_size().y);
-        label.draw(window);
-        label.set_center_position(board_position.x + constants::CELL_WIDTH * i + constants::CELL_WIDTH / 2, board_position.y + board.get_board_height() + label.get_size().y);
-        label.draw(window);
-        label.set_text({char('A' + i)});
-        label.set_center_position(board_position.x - 25, board_position.y + i * constants::CELL_WIDTH + constants::CELL_WIDTH / 2);
-        label.draw(window);
-        label.set_center_position(board_position.x + board.get_board_width() + 25, board_position.y + i * constants::CELL_WIDTH + constants::CELL_WIDTH / 2);
-        label.draw(window);
-    }
+	board.draw_labels(window);
 }
 
