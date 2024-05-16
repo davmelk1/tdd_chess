@@ -15,9 +15,13 @@ public:
 	
 	void set_position(float x, float y);
 	
+    void set_position(sf::Vector2f pos);
+	
 	sf::Vector2f get_position() const;
 	
-	void set_size(const sf::Vector2f& size);
+	void set_size(float size_x, float size_y);
+	
+    void set_size(const sf::Vector2f& size);
 	
 	sf::Vector2f get_size() const;
     
@@ -28,9 +32,16 @@ public:
     void add_figure(Figure* figure_pointer);
     
     Figure* get_figure_pointer() const;
-
-private:
-	ColorEnum color{White};
-	sf::RectangleShape cell_rectangle;
+    
+    void handle_mouse_hovering(const sf::Vector2i& pos);
+protected:
+    ColorEnum color{White};
+    sf::RectangleShape cell_rectangle;
     Figure* figure_ptr{nullptr};
+    
+    bool mouse_is_on_this_cell(sf::Vector2i mouse_position);
+    
+    bool is_hovered{false};
+    
+    void draw_hover_ellipse(sf::RenderWindow& window) const;
 };

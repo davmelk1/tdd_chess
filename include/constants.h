@@ -10,5 +10,9 @@ namespace constants{
     const sf::Color BACKGROUND_COLOR{237, 198, 138};
     const sf::Color WHITE_CELL_COLOR{237, 180, 92};
     const sf::Color BLACK_CELL_COLOR{140, 96, 29};
-
+    inline const sf::Font font = []() {
+        sf::Font font;
+        font.loadFromFile("/home/davit/Downloads/intel_test/venv/lib/python3.9/site-packages/matplotlib/mpl-data/fonts/ttf/DejaVuSans.ttf");
+        return font;
+    }();
 }

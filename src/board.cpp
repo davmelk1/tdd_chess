@@ -87,3 +87,17 @@ void Board::initialize_figures() {
     initialize_rooks();
 }
 
+float Board::get_board_width() const {
+    return board[constants::BOARD_SIZE-1][0].get_position().y + board[constants::BOARD_SIZE-1][0].get_size().y -  board[0][0].get_position().y;
+}
+
+float Board::get_board_height() const {
+    return board[0][constants::BOARD_SIZE-1].get_position().x + board[0][constants::BOARD_SIZE-1].get_size().x -  board[0][0].get_position().x;
+}
+
+void Board::handle_mouse_hovering(sf::Vector2i mouse_position) {
+    for (auto& row : board)
+        for (auto& cell : row)
+            cell.handle_mouse_hovering(mouse_position);
+}
+

@@ -23,9 +23,17 @@ public:
 	
 	[[nodiscard]] int get_size() const;
     
+    
+    
     static sf::Vector2f calculate_board_position_from_constants();
     
     void draw(sf::RenderWindow& window) const;
+    
+    float get_board_width() const;
+
+    float get_board_height() const;
+    
+    void handle_mouse_hovering(sf::Vector2i mouse_position);
 
 protected:
     std::array<std::array<Cell, constants::BOARD_SIZE>, constants::BOARD_SIZE> board;
