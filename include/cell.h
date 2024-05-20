@@ -1,10 +1,13 @@
 #pragma once
 
 #include <SFML/Graphics.hpp>
+#include <forward_list>
 
 #include "color_enum.h"
 #include "constants.h"
 #include "figure.h"
+
+class Figure;
 
 class Cell{
 public:
@@ -37,16 +40,22 @@ public:
 	
 	bool cell_contains_position(const sf::Vector2i& pos);
 	
-	void press(bool b);
+	void press();
 	
 	bool is_pressed() const;
 	
-	std::vector<std::pair<int, int>> get_available_moves(int i, int j);
+	std::forward_list<Cell*> get_available_moves(
+        std::array<std::array<Cell, constants::BOARD_SIZE>, constants::BOARD_SIZE>& board);
 	
 	void set_available();
 	
 	void unset_available();
-
+    
+    void reset_pressed();
+    
+    void delete_figure();
+    
+    bool is_available() const;
 protected:
     ColorEnum color{White};
     sf::RectangleShape cell_rectangle;
@@ -64,7 +73,7 @@ protected:
 	
 	void draw_ellipse(sf::RenderWindow& window, sf::CircleShape& ellipse) const;
 	
-	bool is_available{false};
+	bool is_cell_available{false};
 	
 	void draw_available(sf::RenderWindow& window) const;
 };

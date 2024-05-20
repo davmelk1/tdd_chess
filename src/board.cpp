@@ -104,24 +104,28 @@ void Board::handle_mouse_hovering(sf::Vector2i mouse_position) {
 void Board::handle_mouse_press(const sf::Event::MouseButtonEvent& event) {
 	if (event.button != sf::Mouse::Button::Left)
 		return;
-	for (auto& [i, j] : available_moves) {
-		board[i][j].unset_available();
-		available_moves = {};
-	}
-	Cell* pressed_cell{nullptr};
-	for (auto& row : board)
-        for (auto& cell : row)
-			cell.press(cell.cell_contains_position({event.x, event.y}));
-	for (auto& row : board)
-        for (auto& cell : row)
-			if (cell.is_pressed())
-				pressed_cell = &cell;
-	if (pressed_cell) {
-		int i = (pressed_cell - &board[0][0])/board_size;
-		available_moves = pressed_cell->get_available_moves(i,(pressed_cell - &board[i][0]));
-	}
-	for (const auto& [i,j] : available_moves)
-		board[i][j].set_available();
+    Cell* clicked_cell{get_pressed_cell(event)};
+	if (!clicked_cell) {
+        reset_clicks();
+        return;
+    }
+
+    if (clicked_cell->get_figure_pointer())
+        clicked_cell->press();
+    if (clicked_cell->is_pressed()) {
+        if (clicked_cell != selected_cell && !clicked_cell->is_available())
+            reset_clicks();
+        selected_cell = clicked_cell;
+        available_moves = clicked_cell->get_available_moves(board);
+        for (const auto& move: available_moves)
+            move->set_available();
+    } else {
+        if (clicked_cell->is_available()) {
+            clicked_cell->add_figure(selected_cell->get_figure_pointer());
+            selected_cell->delete_figure();
+        }
+        reset_clicks();
+    }
 }
 
 void Board::draw_labels(sf::RenderWindow& window) const {
@@ -139,5 +143,26 @@ void Board::draw_labels(sf::RenderWindow& window) const {
 		label.set_center_position(board_position.x + get_board_width() + 25, board_position.y + i * constants::CELL_WIDTH + constants::CELL_WIDTH / 2);
 		label.draw(window);
 	}
+}
+
+Cell* Board::get_pressed_cell(const sf::Event::MouseButtonEvent& event) {
+    for (auto& row : board)
+        for (auto& cell : row)
+            if (cell.cell_contains_position({event.x, event.y}))
+                return &cell;
+    return nullptr;
+}
+
+void Board::reset_clicks() {
+    if (selected_cell)
+        selected_cell->reset_pressed();
+    selected_cell = nullptr;
+    for (auto& available : available_moves)
+        available->unset_available();
+    available_moves = {};
+}
+
+Cell& Board::at(std::pair<int, int> position) {
+    return board[position.first][position.second];
 }
 

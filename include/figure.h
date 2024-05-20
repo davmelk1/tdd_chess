@@ -1,9 +1,14 @@
 #pragma once
 
 #include <SFML/Graphics.hpp>
+#include <forward_list>
+#include <array>
 
 #include "color_enum.h"
 #include "constants.h"
+#include "cell.h"
+
+class Cell;
 
 class Figure{
 public:
@@ -17,11 +22,16 @@ public:
     
     void draw(sf::RenderWindow& window) const;
 	
-	virtual std::vector<std::pair<int, int>> get_all_available_moves(int i, int j) const {return {};};
+	virtual std::forward_list<Cell*>
+    get_all_available_moves(std::array<std::array<Cell, constants::BOARD_SIZE>, constants::BOARD_SIZE>& board,
+                            Cell* selected_cell) {return {};};
+    
+    void set_initial_position_to_false();
+
 protected:
     sf::Sprite sprite;
     sf::Texture texture;
     ColorEnum color;
     sf::IntRect get_figure_rect_from_name_and_color(const std::string& name);
-    
+    bool is_in_initial_position{true};
 };

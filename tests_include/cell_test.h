@@ -5,6 +5,7 @@
 #include "cell.h"
 #include "constants.h"
 #include "pawn.h"
+#include "board.h"
 
 class CellTest : public ::testing::Test{
 public:
@@ -75,33 +76,36 @@ TEST_F(DerivedFromCell, TestIfCellContainsClickPosition) {
 TEST_F(DerivedFromCell, TestClickingOnTheCell) {
 	set_position(10, 25);
     set_size({45, 30});
-	press(cell_contains_position({40, 50}));
-	ASSERT_TRUE(is_pressed());
+    EXPECT_TRUE(cell_contains_position({44,45}));
+    press();
+    EXPECT_FALSE(is_pressed());
 }
 
-TEST_F(DerivedFromCell, TestClickingOutsideTheCell) {
+TEST_F(DerivedFromCell, TestClickingOnTheCellWithFigure) {
 	set_position(10, 25);
     set_size({45, 30});
-	press(cell_contains_position({40, 50}));
-	ASSERT_TRUE(is_pressed());
-	press(cell_contains_position({100, 50}));
-	ASSERT_FALSE(is_pressed());
-}
-
-TEST_F(DerivedFromCell, TestDoubleClickingOnTheCell) {
-	set_position(10, 25);
-    set_size({45, 30});
-	press(cell_contains_position({40, 50}));
+    add_figure(new Pawn);
+    EXPECT_TRUE(cell_contains_position({44,45}));
+    press();
 	EXPECT_TRUE(is_pressed());
-	press(cell_contains_position({40, 30}));
-	EXPECT_FALSE(is_pressed());
 }
 
-TEST_F(DerivedFromCell, TestAvailableMovesForWhitePawn) {
+TEST_F(DerivedFromCell, TestDoubleClickingOnTheCellWithFigure) {
 	set_position(10, 25);
     set_size({45, 30});
-	press(cell_contains_position({40, 50}));
-	EXPECT_TRUE(is_pressed());
-	press(cell_contains_position({40, 30}));
-	EXPECT_FALSE(is_pressed());
+    add_figure(new Pawn);
+    EXPECT_TRUE(cell_contains_position({44,45}));
+    press();
+    EXPECT_TRUE(is_pressed());
+    press();
+    EXPECT_FALSE(is_pressed());
+}
+
+TEST_F(DerivedFromCell, TestResettingPressed) {
+	set_position(10, 25);
+    set_size({45, 30});
+    add_figure(new Pawn);
+    press();
+    reset_pressed();
+    EXPECT_FALSE(is_pressed());
 }

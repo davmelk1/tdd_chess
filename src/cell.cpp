@@ -41,14 +41,15 @@ void Cell::set_color(ColorEnum color_) {
 
 void Cell::draw(sf::RenderWindow& window) const {
     window.draw(cell_rectangle);
-	if (is_available)
-		draw_available(window);
     if (figure_ptr) {
         if (is_hovered)
             draw_hover_ellipse(window);
 		if (is_cell_pressed)
 			draw_press_ellipse(window);
         figure_ptr->draw(window);
+    } else {
+        if (is_cell_available)
+            draw_available(window);
     }
 }
 
@@ -89,8 +90,8 @@ bool Cell::cell_contains_position(const sf::Vector2i& pos) {
 	return mouse_is_on_this_cell(pos);
 }
 
-void Cell::press(bool is_mouse_clicked_on_this_cell) {
-	is_cell_pressed =  is_mouse_clicked_on_this_cell && !is_cell_pressed;
+void Cell::press() {
+	is_cell_pressed = !is_cell_pressed && figure_ptr;
 }
 
 void Cell::draw_press_ellipse(sf::RenderWindow& window) const {
@@ -116,14 +117,15 @@ bool Cell::is_pressed() const {
 	return is_cell_pressed;
 }
 
-std::vector<std::pair<int, int>> Cell::get_available_moves(int i, int j) {
+std::forward_list<Cell*> Cell::get_available_moves(
+    std::array<std::array<Cell, constants::BOARD_SIZE>, constants::BOARD_SIZE>& board) {
 	if (figure_ptr)
-		return figure_ptr->get_all_available_moves(i, j);
+		return figure_ptr->get_all_available_moves(board, this);
 	return {};
 }
 
 void Cell::set_available() {
-	is_available = true;
+    is_cell_available = true;
 }
 
 void Cell::draw_available(sf::RenderWindow& window) const {
@@ -141,5 +143,18 @@ void Cell::draw_available(sf::RenderWindow& window) const {
 }
 
 void Cell::unset_available() {
-	is_available = false;
+    is_cell_available = false;
+}
+
+void Cell::delete_figure() {
+    figure_ptr->set_initial_position_to_false();
+    figure_ptr = nullptr;
+}
+
+void Cell::reset_pressed() {
+    is_cell_pressed = false;
+}
+
+bool Cell::is_available() const {
+    return is_cell_available;
 }

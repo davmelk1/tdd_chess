@@ -56,3 +56,7 @@ sf::Vector2f Figure::get_size() const {
     auto bounds = sprite.getLocalBounds();
     return {bounds.width, bounds.height};
 }
+
+void Figure::set_initial_position_to_false() {
+    is_in_initial_position = false;
+}

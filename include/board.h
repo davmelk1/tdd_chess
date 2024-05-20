@@ -2,6 +2,7 @@
 
 #include <SFML/Graphics.hpp>
 #include <array>
+#include <forward_list>
 
 #include "cell.h"
 #include "constants.h"
@@ -39,12 +40,14 @@ public:
 	void handle_mouse_press(const sf::Event::MouseButtonEvent& event);
 	
 	void draw_labels(sf::RenderWindow& window) const;
+    
+    Cell& at(std::pair<int, int>);
 
 protected:
     std::array<std::array<Cell, constants::BOARD_SIZE>, constants::BOARD_SIZE> board;
 	sf::Vector2f board_start_position{};
 	int board_size{constants::BOARD_SIZE};
-	std::vector<std::pair<int, int>> available_moves;
+	std::forward_list<Cell*> available_moves;
     
     void set_position(sf::Vector2f position);
     
@@ -61,4 +64,10 @@ protected:
     void initialize_kings();
     
     void initialize_figures();
+    
+    Cell* selected_cell{nullptr};
+    
+    Cell* get_pressed_cell(const sf::Event::MouseButtonEvent& event);
+    
+    void reset_clicks();
 };
