@@ -27,6 +27,8 @@ public:
                             Cell* selected_cell) {return {};};
     
     void set_initial_position_to_false();
+    
+    ColorEnum get_color() const;
 
 protected:
     sf::Sprite sprite;

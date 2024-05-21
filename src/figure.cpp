@@ -60,3 +60,7 @@ sf::Vector2f Figure::get_size() const {
 void Figure::set_initial_position_to_false() {
     is_in_initial_position = false;
 }
+
+ColorEnum Figure::get_color() const {
+    return color;
+}

@@ -4,7 +4,7 @@ Cell::Cell(ColorEnum color) : color(color) {
     cell_rectangle.setFillColor(color ? constants::WHITE_CELL_COLOR : constants::BLACK_CELL_COLOR);
 }
 
-ColorEnum Cell::get_color() const {
+ColorEnum Cell::get_cell_color() const {
 	return color;
 }
 
@@ -157,4 +157,11 @@ void Cell::reset_pressed() {
 
 bool Cell::is_available() const {
     return is_cell_available;
+}
+
+
+ColorEnum Cell::get_figure_color() const {
+    if (figure_ptr)
+        return figure_ptr->get_color();
+    return {};
 }

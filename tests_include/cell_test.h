@@ -20,17 +20,17 @@ TEST(TestCreatingCells, DefaultCellCreation) {
 
 TEST(TestCreatingCells, TestCreatingBlackCell) {
 	Cell cell{Black};
-	ASSERT_EQ(cell.get_color(), Black);
+	ASSERT_EQ(cell.get_cell_color(), Black);
 }
 
 TEST(TestCreatingCells, TestCreatingWhiteCell) {
 	Cell cell{White};
-	ASSERT_EQ(cell.get_color(), White);
+	ASSERT_EQ(cell.get_cell_color(), White);
 }
 
 TEST(TestCreatingCells, TestDefaultCellIsWhite) {
 	Cell cell;
-	ASSERT_EQ(cell.get_color(), White);
+	ASSERT_EQ(cell.get_cell_color(), White);
 }
 
 TEST_F(CellTest, TestSettingPosition) {

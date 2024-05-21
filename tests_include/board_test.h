@@ -32,7 +32,7 @@ TEST_F(DerivedFromBoard, TestSettingPositionWithVector) {
 TEST_F(DerivedFromBoard, TestTheOrderOfCellsOnBoard) {
     for (int i = 0; i < get_size(); ++i) {
         for (int j = 0; j < get_size(); ++j) {
-            EXPECT_EQ(board[i][j].get_color(), (i + j) % 2 ? White : Black);
+            EXPECT_EQ(board[i][j].get_cell_color(), (i + j) % 2 ? White : Black);
         }
     }
 }

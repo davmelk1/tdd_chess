@@ -14,7 +14,7 @@ public:
 	Cell() = default;
 	explicit Cell(ColorEnum color);
 	
-	ColorEnum get_color() const;
+	ColorEnum get_cell_color() const;
 	
 	void set_position(float x, float y);
 	
@@ -56,6 +56,8 @@ public:
     void delete_figure();
     
     bool is_available() const;
+    
+    ColorEnum get_figure_color() const;
 protected:
     ColorEnum color{White};
     sf::RectangleShape cell_rectangle;
