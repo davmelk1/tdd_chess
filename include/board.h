@@ -48,6 +48,7 @@ protected:
 	sf::Vector2f board_start_position{};
 	int board_size{constants::BOARD_SIZE};
 	std::forward_list<Cell*> available_moves;
+    std::forward_list<Cell*> destroying_moves;
     
     void set_position(sf::Vector2f position);
     

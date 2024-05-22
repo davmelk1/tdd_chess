@@ -57,6 +57,15 @@ public:
     
     bool is_available() const;
     
+    bool can_be_destroyed() const;
+    
+    std::forward_list<Cell*>
+    get_destroying_moves(const std::array<std::array<Cell, constants::BOARD_SIZE>, constants::BOARD_SIZE>& board);
+    
+    void set_can_be_destroyed();
+    
+    void unset_destroyable();
+    
     ColorEnum get_figure_color() const;
 protected:
     ColorEnum color{White};
@@ -78,4 +87,8 @@ protected:
 	bool is_cell_available{false};
 	
 	void draw_available(sf::RenderWindow& window) const;
+    
+    bool is_destroyable{false};
+    
+    void draw_destroyable(sf::RenderWindow& window) const;
 };

@@ -110,17 +110,24 @@ void Board::handle_mouse_press(const sf::Event::MouseButtonEvent& event) {
         return;
     }
 
-    if (clicked_cell->get_figure_pointer())
+    if (clicked_cell->get_figure_pointer() && !clicked_cell->can_be_destroyed())
         clicked_cell->press();
     if (clicked_cell->is_pressed()) {
-        if (clicked_cell != selected_cell && !clicked_cell->is_available())
+        if (clicked_cell != selected_cell && !clicked_cell->is_available() && selected_cell)
             reset_clicks();
         selected_cell = clicked_cell;
         available_moves = clicked_cell->get_available_moves(board);
+        destroying_moves = clicked_cell->get_destroying_moves(board);
         for (const auto& move: available_moves)
             move->set_available();
+        for (const auto& move : destroying_moves)
+            move->set_can_be_destroyed();
     } else {
         if (clicked_cell->is_available()) {
+            clicked_cell->add_figure(selected_cell->get_figure_pointer());
+            selected_cell->delete_figure();
+        } else if (clicked_cell->can_be_destroyed()) {
+            clicked_cell->delete_figure();
             clicked_cell->add_figure(selected_cell->get_figure_pointer());
             selected_cell->delete_figure();
         }
@@ -160,6 +167,9 @@ void Board::reset_clicks() {
     for (auto& available : available_moves)
         available->unset_available();
     available_moves = {};
+    for (const auto& move : destroying_moves)
+        move->unset_destroyable();
+    destroying_moves = {};
 }
 
 Cell& Board::at(std::pair<int, int> position) {

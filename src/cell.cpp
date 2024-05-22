@@ -46,6 +46,8 @@ void Cell::draw(sf::RenderWindow& window) const {
             draw_hover_ellipse(window);
 		if (is_cell_pressed)
 			draw_press_ellipse(window);
+        if (is_destroyable)
+            draw_destroyable(window);
         figure_ptr->draw(window);
     } else {
         if (is_cell_available)
@@ -159,6 +161,36 @@ bool Cell::is_available() const {
     return is_cell_available;
 }
 
+bool Cell::can_be_destroyed() const {
+    return is_destroyable;
+}
+
+std::forward_list<Cell*>
+Cell::get_destroying_moves(const std::array<std::array<Cell, constants::BOARD_SIZE>, constants::BOARD_SIZE>& board) {
+    if (figure_ptr)
+        return figure_ptr->get_destroying_moves(board, this);
+    return {};
+}
+
+void Cell::set_can_be_destroyed() {
+    is_destroyable = true;
+}
+
+void Cell::unset_destroyable() {
+    is_destroyable = false;
+}
+
+void Cell::draw_destroyable(sf::RenderWindow& window) const {
+    static sf::CircleShape destroyable_circle = [&](){
+        sf::CircleShape ellipse;
+        ellipse.setRadius(get_size().x / 4);
+        ellipse.setScale(0.4 * get_size().x / ellipse.getRadius(), 0.2 * get_size().y / ellipse.getRadius());
+        ellipse.setOrigin(ellipse.getLocalBounds().width / 2, ellipse.getLocalBounds().height / 2);
+        ellipse.setFillColor({200, 40, 30 });
+        return ellipse;
+    }();
+    draw_ellipse(window, destroyable_circle);
+}
 
 ColorEnum Cell::get_figure_color() const {
     if (figure_ptr)
