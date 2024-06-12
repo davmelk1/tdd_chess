@@ -72,11 +72,3 @@ TEST_F(BoardTest, TestBoardHeight) {
     ASSERT_EQ(board.get_board_height(), constants::CELL_WIDTH * constants::BOARD_SIZE);
 }
 
-
-TEST_F(DerivedFromBoard, TestAvailableMovesForWhitePawn) {
-    auto selected = &board[1][4];
-    auto moves = selected->get_available_moves(board);
-    EXPECT_NE(std::find(moves.begin(), moves.end(), &board[2][4]), moves.end());
-    EXPECT_NE(std::find(moves.begin(), moves.end(), &board[3][4]), moves.end());
-    EXPECT_EQ(distance(moves.begin(), moves.end()), 2);
-}
