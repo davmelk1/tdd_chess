@@ -24,11 +24,11 @@ public:
 	
 	virtual std::forward_list<Cell*>
     get_all_available_moves(std::array<std::array<Cell, constants::BOARD_SIZE>, constants::BOARD_SIZE>& board,
-                            const Cell* selected_cell) {return {};};
+                            const Cell* selected_cell) = 0;
     
     virtual std::forward_list<Cell*>
     get_destroying_moves(const std::array<std::array<Cell, constants::BOARD_SIZE>, constants::BOARD_SIZE>& board,
-                         Cell* selected_cell) const {return {};};
+                         Cell* selected_cell) const = 0;
 
     
     void set_initial_position_to_false();
