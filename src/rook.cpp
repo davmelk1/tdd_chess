@@ -32,9 +32,3 @@ Rook::get_all_available_moves(std::array<std::array<Cell, constants::BOARD_SIZE>
     return available_moves;
 }
 
-bool Rook::set_available_if_so_and_return_status(Cell &cell, std::forward_list<Cell *> &available_moves) const {
-    if (cell.get_figure_pointer())
-        return false;
-    available_moves.emplace_front(&cell);
-    return true;
-}

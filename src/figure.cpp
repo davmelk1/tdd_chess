@@ -64,3 +64,10 @@ void Figure::set_initial_position_to_false() {
 ColorEnum Figure::get_color() const {
     return color;
 }
+
+bool Figure::set_available_if_so_and_return_status(Cell &cell, std::forward_list<Cell *> &available_moves) const {
+    if (cell.get_figure_pointer())
+        return false;
+    available_moves.emplace_front(&cell);
+    return true;
+}

@@ -41,4 +41,5 @@ protected:
     ColorEnum color;
     sf::IntRect get_figure_rect_from_name_and_color(const std::string& name);
     bool is_in_initial_position{true};
+    bool set_available_if_so_and_return_status(Cell &cell, std::forward_list<Cell *> &available_moves) const;
 };
