@@ -5,7 +5,7 @@
 
 class Knight : public Figure{
 public:
-    Knight(ColorEnum color = White);
+    explicit Knight(ColorEnum color = White);
 
     std::forward_list<Cell*>
     get_all_available_moves(std::array<std::array<Cell, constants::BOARD_SIZE>, constants::BOARD_SIZE>& board,

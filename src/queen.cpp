@@ -7,8 +7,8 @@ Queen::Queen(ColorEnum color) : Figure(color) {
 std::forward_list<Cell *>
 Queen::get_all_available_moves(std::array<std::array<Cell, constants::BOARD_SIZE>, constants::BOARD_SIZE> &board,
                                const Cell *selected_cell) const {
-    unsigned int i  = (selected_cell - &board[0][0]) / board.size();
-    unsigned int j = selected_cell - &board[i][0];
+    int i  = static_cast<int>((selected_cell - &board[0][0]) / board.size());
+    int j = static_cast<int>(selected_cell - &board[i][0]);
     std::forward_list<Cell*> available_moves;
 
     for (auto jj = j + 1; jj < board[0].size(); jj++)

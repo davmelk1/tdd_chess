@@ -5,7 +5,7 @@
 
 class Bishop : public Figure{
 public:
-    Bishop(ColorEnum color = White);
+    explicit Bishop(ColorEnum color = White);
 
     std::forward_list<Cell*>
     get_all_available_moves(std::array<std::array<Cell, constants::BOARD_SIZE>, constants::BOARD_SIZE>& board,
