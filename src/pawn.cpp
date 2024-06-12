@@ -7,7 +7,7 @@ Pawn::Pawn(ColorEnum color) : Figure(color) {
 
 std::forward_list<Cell*>
 Pawn::get_all_available_moves(std::array<std::array<Cell, constants::BOARD_SIZE>, constants::BOARD_SIZE>& board,
-                              const Cell* selected_cell) {
+                              const Cell* selected_cell) const {
     int i  = (selected_cell - &board[0][0]) / board.size();
     auto j = selected_cell - &board[i][0];
     int direction = (color == White ? 1 : -1);

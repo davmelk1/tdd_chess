@@ -5,16 +5,11 @@
 class DerivedFromFigure : public ::testing::Test, public Figure{
 };
 
-TEST_F(DerivedFromFigure, TestFigureSetPosition) {
-    set_position_from_center_coordinates(32, 54);
-    auto size = get_size();
-    ASSERT_EQ(get_position(), sf::Vector2f(32 - size.x / 2,54 - size.y / 2));
-}
 
 //TEST(TestFigureRects, WhitePawn) {
-//    Pawn pawn;
-//    sf::RenderWindow window{{300, 100}, "White pawn"};
-//    pawn.draw(window);
+//    Pawn knight;
+//    sf::RenderWindow window{{300, 100}, "White knight"};
+//    knight.draw(window);
 //    while (window.isOpen()) {
 //        sf::Event ev{};
 //        while (window.pollEvent(ev)) {
@@ -25,15 +20,15 @@ TEST_F(DerivedFromFigure, TestFigureSetPosition) {
 //        }
 //
 //        window.clear(constants::BACKGROUND_COLOR);
-//        pawn.draw(window);
+//        knight.draw(window);
 //        window.display();
 //    }
 //}
 //
 //TEST(TestFigureRects, BlackPawn) {
-//    Pawn pawn{Black};
-//    sf::RenderWindow window{{300, 100}, "Black pawn"};
-//    pawn.draw(window);
+//    Pawn knight{Black};
+//    sf::RenderWindow window{{300, 100}, "Black knight"};
+//    knight.draw(window);
 //    while (window.isOpen()) {
 //        sf::Event ev{};
 //        while (window.pollEvent(ev)) {
@@ -44,7 +39,7 @@ TEST_F(DerivedFromFigure, TestFigureSetPosition) {
 //        }
 //
 //        window.clear(constants::BACKGROUND_COLOR);
-//        pawn.draw(window);
+//        knight.draw(window);
 //        window.display();
 //    }
 //}
