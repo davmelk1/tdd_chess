@@ -8,21 +8,21 @@ Pawn::Pawn(ColorEnum color) : Figure(color) {
 std::forward_list<Cell*>
 Pawn::get_all_available_moves(std::array<std::array<Cell, constants::BOARD_SIZE>, constants::BOARD_SIZE>& board,
                               const Cell* selected_cell) const {
-    int i  = (selected_cell - &board[0][0]) / board.size();
+    unsigned int i  = (selected_cell - &board[0][0]) / board.size();
     auto j = selected_cell - &board[i][0];
     int direction = (color == White ? 1 : -1);
     i += direction;
     if (i + direction < 0 || i + direction >= board.size())
         return {};
-    std::forward_list<Cell*> ret;
+    std::forward_list<Cell*> available_moves;
     if (board[i][j].get_figure_pointer())
-        return ret;
-    ret.emplace_front(&board[i][j]);
+        return available_moves;
+    available_moves.emplace_front(&board[i][j]);
     i += direction;
     if (board[i][j].get_figure_pointer() || !is_in_initial_position)
-        return ret;
-    ret.emplace_front(&board[i][j]);
-    return ret;
+        return available_moves;
+    available_moves.emplace_front(&board[i][j]);
+    return available_moves;
 }
 
 std::forward_list<Cell*>
