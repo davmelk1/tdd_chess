@@ -71,4 +71,8 @@ protected:
     Cell* get_pressed_cell(const sf::Event::MouseButtonEvent& event);
     
     void reset_clicks();
+
+    void handle_cell_click(Cell *pCell);
+
+    void move_cell_figure_to_selected_cell(Cell *pCell);
 };

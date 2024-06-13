@@ -19,9 +19,26 @@ TEST_F(PawnTest, TestFigureSetPosition) {
 
 
 TEST_F(DerivedFromBoard, TestAvailableMovesForWhitePawn) {
-    auto selected = &board[1][4];
-    auto moves = selected->get_available_moves(board);
+    handle_cell_click(&board[1][4]);
+    auto moves = board[1][4].get_available_moves(board);
     EXPECT_NE(std::find(moves.begin(), moves.end(), &board[2][4]), moves.end());
     EXPECT_NE(std::find(moves.begin(), moves.end(), &board[3][4]), moves.end());
     EXPECT_EQ(distance(moves.begin(), moves.end()), 2);
+}
+
+TEST_F(DerivedFromBoard, TestAvailableMovesForBlackPawn) {
+    handle_cell_click(&board[6][2]);
+    auto moves = board[6][2].get_available_moves(board);
+    EXPECT_NE(std::find(moves.begin(), moves.end(), &board[5][2]), moves.end());
+    EXPECT_NE(std::find(moves.begin(), moves.end(), &board[4][2]), moves.end());
+    EXPECT_EQ(distance(moves.begin(), moves.end()), 2);
+}
+
+TEST_F(DerivedFromBoard, TestAvailableMovesForBlackPawnOnSecondStep) {
+    handle_cell_click(&board[6][2]);
+    handle_cell_click(&board[5][2]);
+    handle_cell_click(&board[5][2]);
+    auto moves = board[5][2].get_available_moves(board);
+    EXPECT_NE(std::find(moves.begin(), moves.end(), &board[4][2]), moves.end());
+    EXPECT_EQ(distance(moves.begin(), moves.end()), 1);
 }

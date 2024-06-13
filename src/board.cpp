@@ -7,8 +7,8 @@ Board::Board() {
         for (int j = 0; j < get_size(); ++j) {
             board[i][j].set_color((i + j) % 2 ? White : Black);
             board[i][j].set_size({constants::CELL_WIDTH, constants::CELL_WIDTH});
-            board[i][j].set_position(board_start_position.x + constants::CELL_WIDTH * j,
-                                     board_start_position.y + constants::CELL_WIDTH * i);
+            board[i][j].set_position(board_start_position.x + constants::CELL_WIDTH * static_cast<float>(j),
+                                     board_start_position.y + constants::CELL_WIDTH * static_cast<float>(i));
         }
     initialize_figures();
 }
@@ -105,34 +105,7 @@ void Board::handle_mouse_press(const sf::Event::MouseButtonEvent& event) {
 	if (event.button != sf::Mouse::Button::Left)
 		return;
     Cell* clicked_cell{get_pressed_cell(event)};
-	if (!clicked_cell) {
-        reset_clicks();
-        return;
-    }
-
-    if (clicked_cell->get_figure_pointer() && !clicked_cell->can_be_destroyed())
-        clicked_cell->press();
-    if (clicked_cell->is_pressed()) {
-        if (clicked_cell != selected_cell && !clicked_cell->is_available() && selected_cell)
-            reset_clicks();
-        selected_cell = clicked_cell;
-        available_moves = clicked_cell->get_available_moves(board);
-        destroying_moves = clicked_cell->get_destroying_moves(board);
-        for (const auto& move: available_moves)
-            move->set_available();
-        for (const auto& move : destroying_moves)
-            move->set_can_be_destroyed();
-    } else {
-        if (clicked_cell->is_available()) {
-            clicked_cell->add_figure(selected_cell->get_figure_pointer());
-            selected_cell->delete_figure();
-        } else if (clicked_cell->can_be_destroyed()) {
-            clicked_cell->delete_figure();
-            clicked_cell->add_figure(selected_cell->get_figure_pointer());
-            selected_cell->delete_figure();
-        }
-        reset_clicks();
-    }
+    handle_cell_click(clicked_cell);
 }
 
 void Board::draw_labels(sf::RenderWindow& window) const {
@@ -140,14 +113,14 @@ void Board::draw_labels(sf::RenderWindow& window) const {
 	for (int i = 0; i < get_size(); ++i) {
 		Text label;
 		label.set_text(std::to_string(i + 1));
-		label.set_center_position(board_position.x + constants::CELL_WIDTH * i + constants::CELL_WIDTH / 2, board_position.y - label.get_size().y);
+		label.set_center_position(board_position.x + constants::CELL_WIDTH * static_cast<float>(i) + constants::CELL_WIDTH / 2, board_position.y - label.get_size().y);
 		label.draw(window);
-		label.set_center_position(board_position.x + constants::CELL_WIDTH * i + constants::CELL_WIDTH / 2, board_position.y + get_board_height() + label.get_size().y);
+		label.set_center_position(board_position.x + constants::CELL_WIDTH * static_cast<float>(i) + constants::CELL_WIDTH / 2, board_position.y + get_board_height() + label.get_size().y);
 		label.draw(window);
 		label.set_text({char('A' + i)});
-		label.set_center_position(board_position.x - 25, board_position.y + i * constants::CELL_WIDTH + constants::CELL_WIDTH / 2);
+		label.set_center_position(board_position.x - 25, board_position.y + static_cast<float>(i) * constants::CELL_WIDTH + constants::CELL_WIDTH / 2);
 		label.draw(window);
-		label.set_center_position(board_position.x + get_board_width() + 25, board_position.y + i * constants::CELL_WIDTH + constants::CELL_WIDTH / 2);
+		label.set_center_position(board_position.x + get_board_width() + 25, board_position.y + static_cast<float>(i) * constants::CELL_WIDTH + constants::CELL_WIDTH / 2);
 		label.draw(window);
 	}
 }
@@ -174,5 +147,40 @@ void Board::reset_clicks() {
 
 Cell& Board::at(std::pair<int, int> position) {
     return board[position.first][position.second];
+}
+
+void Board::handle_cell_click(Cell* clicked_cell) {
+    if (!clicked_cell) {
+        reset_clicks();
+        return;
+    }
+
+    if (clicked_cell->get_figure_pointer() && !clicked_cell->can_be_destroyed())
+        clicked_cell->press();
+    if (clicked_cell->is_pressed()) {
+        if (clicked_cell != selected_cell && selected_cell)
+            reset_clicks();
+        selected_cell = clicked_cell;
+        available_moves = clicked_cell->get_available_moves(board);
+        destroying_moves = clicked_cell->get_destroying_moves(board);
+        for (const auto& move: available_moves)
+            move->set_available();
+        for (const auto& move : destroying_moves)
+            move->set_can_be_destroyed();
+    } else {
+        if (clicked_cell->is_available()) {
+            move_cell_figure_to_selected_cell(clicked_cell);
+        } else if (clicked_cell->can_be_destroyed()) {
+            clicked_cell->delete_figure();
+            move_cell_figure_to_selected_cell(clicked_cell);
+        }
+        reset_clicks();
+    }
+
+}
+
+void Board::move_cell_figure_to_selected_cell(Cell* clicked_cell) {
+    clicked_cell->add_figure(selected_cell->get_figure_pointer());
+    selected_cell->delete_figure();
 }
 
