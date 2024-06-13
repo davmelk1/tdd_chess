@@ -27,7 +27,7 @@ public:
                             const Cell* selected_cell) const = 0;
     
     virtual std::forward_list<Cell*>
-    get_destroying_moves(const std::array<std::array<Cell, constants::BOARD_SIZE>, constants::BOARD_SIZE>& board,
+    get_destroying_moves(std::array<std::array<Cell, constants::BOARD_SIZE>, constants::BOARD_SIZE> &board,
                          Cell* selected_cell) const {return {};};
 
     
@@ -42,4 +42,5 @@ protected:
     sf::IntRect get_figure_rect_from_name_and_color(const std::string& name);
     bool is_in_initial_position{true};
     bool set_available_if_so_and_return_status(Cell &cell, std::forward_list<Cell *> &available_moves) const;
+    bool set_destroyable_if_so_and_return_if_we_should_break(Cell &cell, std::forward_list<Cell *>& destroying_moves) const;
 };

@@ -42,3 +42,9 @@ TEST_F(DerivedFromBoard, TestAvailableMovesForBlackPawnOnSecondStep) {
     EXPECT_NE(std::find(moves.begin(), moves.end(), &board[4][2]), moves.end());
     EXPECT_EQ(distance(moves.begin(), moves.end()), 1);
 }
+
+TEST_F(DerivedFromBoard, TestAvailableMovesForBlackPawnThatHasNoMove) {
+    board[2][3].add_figure(new Pawn(Black));
+    auto moves = board[2][3].get_available_moves(board);
+    EXPECT_EQ(distance(moves.begin(), moves.end()), 0);
+}

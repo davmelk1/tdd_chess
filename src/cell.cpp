@@ -166,7 +166,7 @@ bool Cell::can_be_destroyed() const {
 }
 
 std::forward_list<Cell*>
-Cell::get_destroying_moves(const std::array<std::array<Cell, constants::BOARD_SIZE>, constants::BOARD_SIZE>& board) {
+Cell::get_destroying_moves(std::array<std::array<Cell, constants::BOARD_SIZE>, constants::BOARD_SIZE> &board) {
     if (figure_ptr)
         return figure_ptr->get_destroying_moves(board, this);
     return {};

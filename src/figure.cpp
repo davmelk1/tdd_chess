@@ -71,3 +71,12 @@ bool Figure::set_available_if_so_and_return_status(Cell &cell, std::forward_list
     available_moves.emplace_front(&cell);
     return true;
 }
+
+bool Figure::set_destroyable_if_so_and_return_if_we_should_break(Cell &cell, std::forward_list<Cell *>&
+        destroying_moves) const {
+    if (!cell.get_figure_pointer())
+        return false;
+    if (cell.get_figure_color() != color)
+        destroying_moves.emplace_front(&cell);
+    return true;
+}

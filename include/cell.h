@@ -60,7 +60,7 @@ public:
     bool can_be_destroyed() const;
     
     std::forward_list<Cell*>
-    get_destroying_moves(const std::array<std::array<Cell, constants::BOARD_SIZE>, constants::BOARD_SIZE>& board);
+    get_destroying_moves(std::array<std::array<Cell, constants::BOARD_SIZE>, constants::BOARD_SIZE> &board);
     
     void set_can_be_destroyed();
     

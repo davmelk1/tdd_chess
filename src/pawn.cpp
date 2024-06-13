@@ -26,7 +26,7 @@ Pawn::get_all_available_moves(std::array<std::array<Cell, constants::BOARD_SIZE>
 }
 
 std::forward_list<Cell*>
-Pawn::get_destroying_moves(const std::array<std::array<Cell, constants::BOARD_SIZE>, constants::BOARD_SIZE>& board,
+Pawn::get_destroying_moves(std::array<std::array<Cell, constants::BOARD_SIZE>, constants::BOARD_SIZE> &board,
                            Cell* selected_cell) const {
     unsigned int i  = (selected_cell - &board[0][0]) / board.size();
     auto j = selected_cell - &board[i][0];
