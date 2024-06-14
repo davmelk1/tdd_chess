@@ -49,3 +49,34 @@ TEST_F(DerivedFromBoard, TestAllAvailableMovesForQueen) {
     EXPECT_NE(std::find(moves.begin(), moves.end(), &board[5][5]), moves.end());
     EXPECT_EQ(std::distance(moves.begin(), moves.end()), 16);
 }
+
+TEST_F(DerivedFromBoard, TestEmptyDestroyingMovesForWhiteQueen) {
+    auto moves = board[0][3].get_available_moves(board);
+    ASSERT_EQ(std::distance(moves.begin(), moves.end()), 0);
+}
+
+TEST_F(DerivedFromBoard, TestEmptyDestroyingeMovesForBlackQueen) {
+    auto moves = board[7][3].get_available_moves(board);
+    ASSERT_EQ(std::distance(moves.begin(), moves.end()), 0);
+}
+
+TEST_F(DerivedFromBoard, TestDestroyingMovesForQueen) {
+    handle_cell_click(&board[7][3]);
+    available_moves.emplace_front(&board[2][4]);
+    handle_cell_click(&board[2][4]);
+    auto moves = board[2][4].get_destroying_moves(board);
+    EXPECT_NE(std::find(moves.begin(), moves.end(), &board[1][3]), moves.end());
+    EXPECT_NE(std::find(moves.begin(), moves.end(), &board[1][4]), moves.end());
+    EXPECT_NE(std::find(moves.begin(), moves.end(), &board[1][5]), moves.end());
+    EXPECT_EQ(std::distance(moves.begin(), moves.end()), 3);
+
+    handle_cell_click(&board[0][3]);
+    available_moves.emplace_front(&board[5][4]);
+    handle_cell_click(&board[5][4]);
+    moves = board[5][4].get_destroying_moves(board);
+    EXPECT_NE(std::find(moves.begin(), moves.end(), &board[6][3]), moves.end());
+    EXPECT_NE(std::find(moves.begin(), moves.end(), &board[6][4]), moves.end());
+    EXPECT_NE(std::find(moves.begin(), moves.end(), &board[6][5]), moves.end());
+    EXPECT_NE(std::find(moves.begin(), moves.end(), &board[2][4]), moves.end());
+    EXPECT_EQ(std::distance(moves.begin(), moves.end()), 4);
+}
