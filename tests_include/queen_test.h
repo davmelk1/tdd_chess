@@ -15,3 +15,37 @@ TEST_F(QueenTest, TestFigureSetPosition) {
     auto size = queen.get_size();
     ASSERT_EQ(queen.get_position(), sf::Vector2f(32 - size.x / 2, 54 - size.y / 2));
 }
+
+TEST_F(DerivedFromBoard, TestEmptyAvailableMovesForWhiteQueen) {
+    auto moves = board[0][3].get_available_moves(board);
+    ASSERT_EQ(std::distance(moves.begin(), moves.end()), 0);
+}
+
+TEST_F(DerivedFromBoard, TestEmptyAvailableMovesForBlackQueen) {
+    auto moves = board[7][3].get_available_moves(board);
+    ASSERT_EQ(std::distance(moves.begin(), moves.end()), 0);
+}
+
+TEST_F(DerivedFromBoard, TestAllAvailableMovesForQueen) {
+    handle_cell_click(&board[0][3]);
+    available_moves.emplace_front(&board[3][3]);
+    handle_cell_click(&board[3][3]);
+    auto moves = board[3][3].get_available_moves(board);
+    EXPECT_NE(std::find(moves.begin(), moves.end(), &board[3][0]), moves.end());
+    EXPECT_NE(std::find(moves.begin(), moves.end(), &board[3][1]), moves.end());
+    EXPECT_NE(std::find(moves.begin(), moves.end(), &board[3][2]), moves.end());
+    EXPECT_NE(std::find(moves.begin(), moves.end(), &board[3][4]), moves.end());
+    EXPECT_NE(std::find(moves.begin(), moves.end(), &board[3][5]), moves.end());
+    EXPECT_NE(std::find(moves.begin(), moves.end(), &board[3][6]), moves.end());
+    EXPECT_NE(std::find(moves.begin(), moves.end(), &board[3][7]), moves.end());
+    EXPECT_NE(std::find(moves.begin(), moves.end(), &board[2][3]), moves.end());
+    EXPECT_NE(std::find(moves.begin(), moves.end(), &board[4][3]), moves.end());
+    EXPECT_NE(std::find(moves.begin(), moves.end(), &board[5][3]), moves.end());
+    EXPECT_NE(std::find(moves.begin(), moves.end(), &board[2][2]), moves.end());
+    EXPECT_NE(std::find(moves.begin(), moves.end(), &board[2][4]), moves.end());
+    EXPECT_NE(std::find(moves.begin(), moves.end(), &board[4][2]), moves.end());
+    EXPECT_NE(std::find(moves.begin(), moves.end(), &board[4][4]), moves.end());
+    EXPECT_NE(std::find(moves.begin(), moves.end(), &board[5][3]), moves.end());
+    EXPECT_NE(std::find(moves.begin(), moves.end(), &board[5][5]), moves.end());
+    EXPECT_EQ(std::distance(moves.begin(), moves.end()), 16);
+}

@@ -168,9 +168,9 @@ void Board::handle_cell_click(Cell* clicked_cell) {
         for (const auto& move : destroying_moves)
             move->set_can_be_destroyed();
     } else {
-        if (clicked_cell->is_available()) {
+        if (std::find(available_moves.begin(), available_moves.end(), clicked_cell) != available_moves.end()) {
             move_cell_figure_to_selected_cell(clicked_cell);
-        } else if (clicked_cell->can_be_destroyed()) {
+        } else if (std::find(destroying_moves.begin(), destroying_moves.end(), clicked_cell) != destroying_moves.end()) {
             clicked_cell->delete_figure();
             move_cell_figure_to_selected_cell(clicked_cell);
         }
