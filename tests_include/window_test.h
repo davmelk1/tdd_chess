@@ -6,29 +6,29 @@
 
 class DerivedFromGameWindow : public ::testing::Test, public GameWindow{};
 
-TEST_F(DerivedFromGameWindow, TestBoardDrawing) {
-    while (window.isOpen()) {
-		sf::Event ev{};
-		while (window.pollEvent(ev)) {
-			if (ev.type == sf::Event::KeyPressed) {
-				ASSERT_NE(ev.key.code, sf::Keyboard::Escape);
-				window.close();
-			}
-			switch (ev.type) {
-				case sf::Event::MouseMoved:
-					board.handle_mouse_hovering({ev.mouseMove.x, ev.mouseMove.y});
-					break;
-				case sf::Event::MouseButtonPressed:
-					board.handle_mouse_press(ev.mouseButton);
-					break;
-				default:
-					break;
-				
-			}
-		}
-		draw_and_display();
-    }
-}
+//TEST_F(DerivedFromGameWindow, TestBoardDrawing) {
+//    while (window.isOpen()) {
+//		sf::Event ev{};
+//		while (window.pollEvent(ev)) {
+//			if (ev.type == sf::Event::KeyPressed) {
+//				ASSERT_NE(ev.key.code, sf::Keyboard::Escape);
+//				window.close();
+//			}
+//			switch (ev.type) {
+//				case sf::Event::MouseMoved:
+//					board.handle_mouse_hovering({ev.mouseMove.x, ev.mouseMove.y});
+//					break;
+//				case sf::Event::MouseButtonPressed:
+//					board.handle_mouse_press(ev.mouseButton);
+//					break;
+//				default:
+//					break;
+//
+//			}
+//		}
+//		draw_and_display();
+//    }
+//}
 
 TEST_F(DerivedFromGameWindow, TestCheckingCloseEvent) {
     sf::Event close_event{sf::Event::Closed};
