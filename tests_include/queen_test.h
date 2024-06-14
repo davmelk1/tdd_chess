@@ -79,4 +79,17 @@ TEST_F(DerivedFromBoard, TestDestroyingMovesForQueen) {
     EXPECT_NE(std::find(moves.begin(), moves.end(), &board[6][5]), moves.end());
     EXPECT_NE(std::find(moves.begin(), moves.end(), &board[2][4]), moves.end());
     EXPECT_EQ(std::distance(moves.begin(), moves.end()), 4);
+    handle_cell_click(&board[6][3]);
+    handle_cell_click(&board[5][3]);
+    handle_cell_click(&board[6][5]);
+    handle_cell_click(&board[5][5]);
+    moves = board[5][4].get_destroying_moves(board);
+    EXPECT_NE(std::find(moves.begin(), moves.end(), &board[7][2]), moves.end());
+    EXPECT_NE(std::find(moves.begin(), moves.end(), &board[6][4]), moves.end());
+    EXPECT_NE(std::find(moves.begin(), moves.end(), &board[7][6]), moves.end());
+    EXPECT_NE(std::find(moves.begin(), moves.end(), &board[2][4]), moves.end());
+    EXPECT_NE(std::find(moves.begin(), moves.end(), &board[5][3]), moves.end());
+    EXPECT_NE(std::find(moves.begin(), moves.end(), &board[5][5]), moves.end());
+    EXPECT_EQ(std::distance(moves.begin(), moves.end()), 6);
+
 }
