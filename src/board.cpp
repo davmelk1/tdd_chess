@@ -98,7 +98,7 @@ float Board::get_board_height() const {
 void Board::handle_mouse_hovering(sf::Vector2i mouse_position) {
     for (auto& row : board)
         for (auto& cell : row)
-            cell.handle_mouse_hovering(mouse_position);
+            cell.handle_mouse_hovering(mouse_position, order_color);
 }
 
 void Board::handle_mouse_press(const sf::Event::MouseButtonEvent& event) {
@@ -156,7 +156,8 @@ void Board::handle_cell_click(Cell* clicked_cell) {
     }
 
     if (clicked_cell->get_figure_pointer() && !clicked_cell->can_be_destroyed())
-        clicked_cell->press();
+        if (order_color == clicked_cell->get_figure_color())
+            clicked_cell->press();
     if (clicked_cell->is_pressed()) {
         if (clicked_cell != selected_cell && selected_cell)
             reset_clicks();
@@ -180,6 +181,7 @@ void Board::handle_cell_click(Cell* clicked_cell) {
 }
 
 void Board::move_cell_figure_to_selected_cell(Cell* clicked_cell) {
+    order_color = (order_color == White)? Black : White;
     clicked_cell->add_figure(selected_cell->get_figure_pointer());
     selected_cell->delete_figure();
 }

@@ -74,8 +74,8 @@ bool Cell::mouse_is_on_this_cell(sf::Vector2i mouse_position) {
             static_cast<float>(mouse_position.y) < bounds.top + bounds.height;
 }
 
-void Cell::handle_mouse_hovering(const sf::Vector2i& pos) {
-    is_hovered = mouse_is_on_this_cell(pos);
+void Cell::handle_mouse_hovering(const sf::Vector2i &pos, ColorEnum order_color) {
+    is_hovered = mouse_is_on_this_cell(pos) && figure_ptr && order_color == figure_ptr->get_color();
 }
 
 void Cell::draw_hover_ellipse(sf::RenderWindow& window) const {

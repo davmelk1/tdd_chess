@@ -36,7 +36,7 @@ public:
     
     Figure* get_figure_pointer() const;
     
-    void handle_mouse_hovering(const sf::Vector2i& pos);
+    void handle_mouse_hovering(const sf::Vector2i &pos, ColorEnum b);
 	
 	bool cell_contains_position(const sf::Vector2i& pos);
 	
