@@ -13,13 +13,13 @@ Knight::get_all_available_moves(std::array<std::array<Cell, constants::BOARD_SIZ
 
     for (int i = 1; i < 3; ++i) {
         int j = i % 2 + 1;
-        if (row + i < board.size() && col + j < board[0].size())
+        if (i_j_in_board_size(row + i, col + j))
             set_available_if_so_and_return_status(board[row+i][col+j], available_moves);
-        if (row + i < board.size() && col + j >= 0)
+        if (i_j_in_board_size(row + i, col - j))
             set_available_if_so_and_return_status(board[row+i][col-j], available_moves);
-        if (row - i >= 0 && col + j < board[0].size())
+        if (i_j_in_board_size(row - i, col + j))
             set_available_if_so_and_return_status(board[row-i][col+j], available_moves);
-        if (row - i >= 0 && col - j >= 0)
+        if (i_j_in_board_size(row - i, col - j))
             set_available_if_so_and_return_status(board[row-i][col-j], available_moves);
     }
 
