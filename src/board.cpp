@@ -156,7 +156,7 @@ void Board::handle_cell_click(Cell* clicked_cell) {
     }
 
     if (clicked_cell->get_figure_pointer() && !clicked_cell->can_be_destroyed())
-        if (order_color == clicked_cell->get_figure_color())
+        if (order_color == clicked_cell->get_figure_color() || without_order)
             clicked_cell->press();
     if (clicked_cell->is_pressed()) {
         if (clicked_cell != selected_cell && selected_cell)

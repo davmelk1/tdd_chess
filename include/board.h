@@ -51,7 +51,8 @@ protected:
     std::forward_list<Cell*> destroying_moves;
 
     ColorEnum order_color{White};
-    
+    bool without_order{false};
+
     void set_position(sf::Vector2f position);
     
     void initialize_pawns();

@@ -8,7 +8,10 @@ public:
 };
 
 class DerivedFromBoard : public ::testing::Test, public Board {
-
+public:
+    DerivedFromBoard() : ::testing::Test() {
+        without_order = true;
+    }
 };
 
 TEST(TestCReatingBoard, TestDefaultBoardCreation) {
