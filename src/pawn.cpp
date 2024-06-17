@@ -28,15 +28,15 @@ Pawn::get_all_available_moves(std::array<std::array<Cell, constants::BOARD_SIZE>
 std::forward_list<Cell*>
 Pawn::get_destroying_moves(std::array<std::array<Cell, constants::BOARD_SIZE>, constants::BOARD_SIZE> &board,
                            Cell* selected_cell) const {
-    unsigned int i  = (selected_cell - &board[0][0]) / board.size();
-    auto j = selected_cell - &board[i][0];
+    int i  = static_cast<int>((selected_cell - &board[0][0]) / board.size());
+    int j = static_cast<int>(selected_cell - &board[i][0]);
     int direction = (color == White ? 1 : -1);
     if (i + direction < 0 || i + direction >= board.size())
         return {};
-    std::forward_list<Cell*> ret;
-    if (j + 1 < board.size() && board[i + direction][j + 1].get_figure_pointer() && board[i + direction][j + 1].get_figure_color() != color)
-        ret.emplace_front(const_cast<Cell*>(&board[i + direction][j + 1]));
-    if (j - 1 >= 0 && board[i + direction][j - 1].get_figure_pointer() && board[i + direction][j - 1].get_figure_color() != color)
-        ret.emplace_front(const_cast<Cell*>(&board[i + direction][j - 1]));
-    return ret;
+    std::forward_list<Cell*> destroying_moves;
+    if (i_j_in_board_size(i + direction, j + 1))
+        set_destroyable_if_so_and_return_if_we_should_break(board[i + direction][j + 1], destroying_moves);
+    if (i_j_in_board_size(i + direction, j - 1))
+        set_destroyable_if_so_and_return_if_we_should_break(board[i + direction][j - 1], destroying_moves);
+    return destroying_moves;
 }
