@@ -148,3 +148,42 @@ TEST_F(DerivedFromBoard, TestBlackRookAvailableMoves4) {
     EXPECT_NE(std::find(moves.begin(), moves.end(), &board[2][0]), moves.end());
     EXPECT_EQ(std::distance(moves.begin(), moves.end()), 10);
 }
+
+TEST_F(DerivedFromBoard, TestEmptyDestroyingMovesForRook) {
+    auto moves = board[0][0].get_destroying_moves(board);
+    EXPECT_EQ(std::distance(moves.begin(), moves.end()), 0);
+    moves = board[0][7].get_destroying_moves(board);
+    EXPECT_EQ(std::distance(moves.begin(), moves.end()), 0);
+    moves = board[7][0].get_destroying_moves(board);
+    EXPECT_EQ(std::distance(moves.begin(), moves.end()), 0);
+    moves = board[7][7].get_destroying_moves(board);
+    EXPECT_EQ(std::distance(moves.begin(), moves.end()), 0);
+}
+
+TEST_F(DerivedFromBoard, TestRookDestroyingMoves) {
+    handle_cell_click(&board[0][0]);
+    available_moves.emplace_front(&board[2][0]);
+    handle_cell_click(&board[2][0]);
+    auto moves = board[2][0].get_destroying_moves(board);
+    EXPECT_EQ(std::distance(moves.begin(), moves.end()), 1);
+    EXPECT_NE(std::find(moves.begin(), moves.end(), &board[6][0]), moves.end());
+
+    handle_cell_click(&board[7][0]);
+    available_moves.emplace_front(&board[0][0]);
+    handle_cell_click(&board[0][0]);
+    moves = board[0][0].get_destroying_moves(board);
+    EXPECT_EQ(std::distance(moves.begin(), moves.end()), 2);
+    EXPECT_NE(std::find(moves.begin(), moves.end(), &board[0][1]), moves.end());
+    EXPECT_NE(std::find(moves.begin(), moves.end(), &board[1][0]), moves.end());
+
+    handle_cell_click(&board[7][7]);
+    available_moves.emplace_front(&board[4][0]);
+    handle_cell_click(&board[4][0]);
+    handle_cell_click(&board[2][0]);
+    available_moves.emplace_front(&board[7][7]);
+    handle_cell_click(&board[7][7]);
+    moves = board[7][7].get_destroying_moves(board);
+    EXPECT_EQ(std::distance(moves.begin(), moves.end()), 2);
+    EXPECT_NE(std::find(moves.begin(), moves.end(), &board[7][6]), moves.end());
+    EXPECT_NE(std::find(moves.begin(), moves.end(), &board[6][7]), moves.end());
+}
