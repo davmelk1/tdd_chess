@@ -112,3 +112,37 @@ TEST_F(DerivedFromBoard, TestBlackBishopAvailableMoves3) {
     EXPECT_NE(std::find(moves.begin(), moves.end(),&board[2][3]), moves.end());
     EXPECT_EQ(std::distance(moves.begin(), moves.end()), 8);
 }
+
+TEST_F(DerivedFromBoard, TestEmptyDestroyingMovesForBishop) {
+    auto moves = board[0][2].get_destroying_moves(board);
+    EXPECT_EQ(std::distance(moves.begin(), moves.end()), 0);
+    moves = board[0][5].get_destroying_moves(board);
+    EXPECT_EQ(std::distance(moves.begin(), moves.end()), 0);
+    moves = board[7][2].get_destroying_moves(board);
+    EXPECT_EQ(std::distance(moves.begin(), moves.end()), 0);
+    moves = board[7][5].get_destroying_moves(board);
+    EXPECT_EQ(std::distance(moves.begin(), moves.end()), 0);
+}
+
+TEST_F(DerivedFromBoard, TestDestroyingMovesForBishop) {
+    handle_cell_click(&board[1][4]);
+    handle_cell_click(&board[2][4]);
+    handle_cell_click(&board[0][5]);
+    handle_cell_click(&board[3][2]);
+    handle_cell_click(&board[3][2]);
+    handle_cell_click(&board[5][4]);
+    handle_cell_click(&board[6][1]);
+    handle_cell_click(&board[5][1]);
+    handle_cell_click(&board[7][2]);
+    handle_cell_click(&board[6][1]);
+    handle_cell_click(&board[6][1]);
+    handle_cell_click(&board[2][5]);
+    auto moves = board[2][5].get_destroying_moves(board);
+    EXPECT_NE(std::find(moves.begin(), moves.end(),&board[0][3]), moves.end());
+    EXPECT_NE(std::find(moves.begin(), moves.end(),&board[1][6]), moves.end());
+    EXPECT_EQ(std::distance(moves.begin(), moves.end()), 2);
+    moves = board[5][4].get_destroying_moves(board);
+    EXPECT_NE(std::find(moves.begin(), moves.end(),&board[6][3]), moves.end());
+    EXPECT_NE(std::find(moves.begin(), moves.end(),&board[6][5]), moves.end());
+    EXPECT_EQ(std::distance(moves.begin(), moves.end()), 2);
+}
