@@ -31,3 +31,31 @@ King::get_all_available_moves(std::array<std::array<Cell, constants::BOARD_SIZE>
     return available_moves;
 
 }
+
+std::forward_list<Cell *>
+King::get_destroying_moves(std::array<std::array<Cell, constants::BOARD_SIZE>, constants::BOARD_SIZE> &board,
+                           Cell *selected_cell) const {
+    int i  = static_cast<int>((selected_cell - &board[0][0]) / board.size());
+    int j = static_cast<int>(selected_cell - &board[i][0]);
+    std::forward_list<Cell*> destroying_moves;
+    if (i_j_in_board_size(i - 1, j))
+        set_destroyable_if_so_and_return_if_we_should_break(board[i - 1][j], destroying_moves);
+    if (i_j_in_board_size(i, j - 1))
+        set_destroyable_if_so_and_return_if_we_should_break(board[i][j - 1], destroying_moves);
+    if (i_j_in_board_size(i + 1 , j))
+        set_destroyable_if_so_and_return_if_we_should_break(board[i + 1][j], destroying_moves);
+    if (i_j_in_board_size(i, j + 1))
+        set_destroyable_if_so_and_return_if_we_should_break(board[i][j + 1], destroying_moves);
+    if (i_j_in_board_size(i + 1, j + 1))
+        set_destroyable_if_so_and_return_if_we_should_break(board[i + 1][j + 1], destroying_moves);
+    if (i_j_in_board_size(i + 1, j - 1))
+        set_destroyable_if_so_and_return_if_we_should_break(board[i + 1][j - 1], destroying_moves);
+    if (i_j_in_board_size(i - 1, j + 1))
+        set_destroyable_if_so_and_return_if_we_should_break(board[i - 1][j + 1], destroying_moves);
+    if (i_j_in_board_size(i - 1, j - 1))
+        set_destroyable_if_so_and_return_if_we_should_break(board[i - 1][j - 1], destroying_moves);
+
+    return destroying_moves;
+}
+
+

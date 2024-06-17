@@ -43,4 +43,5 @@ protected:
     bool is_in_initial_position{true};
     bool set_available_if_so_and_return_status(Cell &cell, std::forward_list<Cell *> &available_moves) const;
     bool set_destroyable_if_so_and_return_if_we_should_break(Cell &cell, std::forward_list<Cell *>& destroying_moves) const;
+    bool i_j_in_board_size(int i, int j) const;
 };

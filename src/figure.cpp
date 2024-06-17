@@ -80,3 +80,7 @@ bool Figure::set_destroyable_if_so_and_return_if_we_should_break(Cell &cell, std
         destroying_moves.emplace_front(&cell);
     return true;
 }
+
+bool Figure::i_j_in_board_size(int i, int j) const {
+    return i >= 0 && j >= 0 && i < constants::BOARD_SIZE && j < constants::BOARD_SIZE;
+}

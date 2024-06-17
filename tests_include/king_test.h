@@ -57,3 +57,37 @@ TEST_F(DerivedFromBoard, TestBlackKingAvailableMoves1) {
     EXPECT_NE(std::find(moves.begin(), moves.end(), &board[5][5]), moves.end());
     EXPECT_EQ(std::distance(moves.begin(), moves.end()), 4);
 }
+
+TEST_F(DerivedFromBoard, TestEmptyDestroyingMovesForKing) {
+    auto moves = board[0][4].get_destroying_moves(board);
+    EXPECT_EQ(std::distance(moves.begin(), moves.end()), 0);
+    moves = board[7][4].get_destroying_moves(board);
+    EXPECT_EQ(std::distance(moves.begin(), moves.end()), 0);
+}
+
+TEST_F(DerivedFromBoard, TestDestroyingMovesForKing) {
+    handle_cell_click(&board[0][4]);
+    available_moves.emplace_front(&board[2][2]);
+    handle_cell_click(&board[2][2]);
+    handle_cell_click(&board[7][4]);
+    available_moves.emplace_front(&board[0][4]);
+    handle_cell_click(&board[0][4]);
+    handle_cell_click(&board[2][2]);
+    available_moves.emplace_front(&board[7][4]);
+    handle_cell_click(&board[7][4]);
+
+    auto moves = board[0][4].get_destroying_moves(board);
+    EXPECT_EQ(std::distance(moves.begin(), moves.end()), 5);
+    EXPECT_NE(std::find(moves.begin(), moves.end(), &board[0][5]), moves.end());
+    EXPECT_NE(std::find(moves.begin(), moves.end(), &board[0][3]), moves.end());
+    EXPECT_NE(std::find(moves.begin(), moves.end(), &board[1][3]), moves.end());
+    EXPECT_NE(std::find(moves.begin(), moves.end(), &board[1][4]), moves.end());
+    EXPECT_NE(std::find(moves.begin(), moves.end(), &board[1][5]), moves.end());
+    moves = board[7][4].get_destroying_moves(board);
+    EXPECT_EQ(std::distance(moves.begin(), moves.end()), 5);
+    EXPECT_NE(std::find(moves.begin(), moves.end(), &board[7][5]), moves.end());
+    EXPECT_NE(std::find(moves.begin(), moves.end(), &board[7][3]), moves.end());
+    EXPECT_NE(std::find(moves.begin(), moves.end(), &board[6][3]), moves.end());
+    EXPECT_NE(std::find(moves.begin(), moves.end(), &board[6][4]), moves.end());
+    EXPECT_NE(std::find(moves.begin(), moves.end(), &board[6][5]), moves.end());
+}
