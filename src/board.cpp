@@ -145,7 +145,7 @@ void Board::reset_clicks() {
     destroying_moves = {};
 }
 
-Cell& Board::at(std::pair<int, int> position) {
+[[maybe_unused]] Cell& Board::at(std::pair<int, int> position) {
     return board[position.first][position.second];
 }
 

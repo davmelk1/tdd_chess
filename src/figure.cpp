@@ -4,7 +4,7 @@
 Figure::Figure(ColorEnum color) : color(color) {
     texture.loadFromFile("../figures-removebg-preview.png");
     sprite.setTexture(texture);
-};
+}
 
 void Figure::set_position_from_center_coordinates(float x, float y) {
     auto bounds = sprite.getLocalBounds();
@@ -16,35 +16,35 @@ sf::Vector2f Figure::get_position() const {
 }
 
 sf::IntRect Figure::get_figure_rect_from_name_and_color(const std::string& name) {
-    auto texture_size = texture.getSize();
+    sf::Vector2f texture_size = static_cast<sf::Vector2f>(texture.getSize());
     static const std::map<std::string, sf::FloatRect> ma{
         {
-            "pawn", {texture_size.x / 6.f * 5, texture_size.y / 2.f,
-                        texture_size.x / 6.f, texture_size.y / 2.f}
+            "pawn", {texture_size.x / 6 * 5, texture_size.y / 2,
+                        texture_size.x / 6, texture_size.y / 2}
         },
         {
-            "knight", {texture_size.x / 6.f * 4, texture_size.y / 2.f,
-                        texture_size.x / 6.f, texture_size.y / 2.f}
+            "knight", {texture_size.x / 6 * 4, texture_size.y / 2,
+                        texture_size.x / 6, texture_size.y / 2}
         },
         {
-            "bishop", {texture_size.x / 6.f * 1, texture_size.y / 2.f,
-                        texture_size.x / 6.f, texture_size.y / 2.f}
+            "bishop", {texture_size.x / 6 * 1, texture_size.y / 2,
+                        texture_size.x / 6, texture_size.y / 2}
         },
         {
-            "rook", {texture_size.x / 6.f * 0, texture_size.y / 2.f,
-                        texture_size.x / 6.f, texture_size.y / 2.f}
+            "rook", {texture_size.x / 6 * 0, texture_size.y / 2,
+                        texture_size.x / 6, texture_size.y / 2}
         },
         {
-            "queen", {texture_size.x / 6.f * 2, texture_size.y / 2.f,
-                        texture_size.x / 6.f, texture_size.y / 2.f}
+            "queen", {texture_size.x / 6 * 2, texture_size.y / 2,
+                        texture_size.x / 6, texture_size.y / 2}
         },
         {
-            "king", {texture_size.x / 6.f * 3, texture_size.y / 2.f,
-                        texture_size.x / 6.f, texture_size.y / 2.f}
+            "king", {texture_size.x / 6 * 3, texture_size.y / 2,
+                        texture_size.x / 6, texture_size.y / 2}
         },
     };
     auto rect = ma.at(name);
-    return {static_cast<int>(rect.left), static_cast<int>(rect.top * color),
+    return {static_cast<int>(rect.left), static_cast<int>(rect.top * static_cast<float>(color == White)),
             static_cast<int>(rect.width), static_cast<int>(rect.height)};
 }
 
@@ -65,7 +65,7 @@ ColorEnum Figure::get_color() const {
     return color;
 }
 
-bool Figure::set_available_if_so_and_return_status(Cell &cell, std::forward_list<Cell *> &available_moves) const {
+bool Figure::set_available_if_so_and_return_status(Cell &cell, std::forward_list<Cell *> &available_moves) {
     if (cell.get_figure_pointer())
         return false;
     available_moves.emplace_front(&cell);
@@ -81,6 +81,6 @@ bool Figure::set_destroyable_if_so_and_return_if_we_should_break(Cell &cell, std
     return true;
 }
 
-bool Figure::i_j_in_board_size(int i, int j) const {
+bool Figure::i_j_in_board_size(int i, int j) {
     return i >= 0 && j >= 0 && i < constants::BOARD_SIZE && j < constants::BOARD_SIZE;
 }

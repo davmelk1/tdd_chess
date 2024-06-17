@@ -17,8 +17,8 @@ public:
 	ColorEnum get_cell_color() const;
 	
 	void set_position(float x, float y);
-	
-    void set_position(sf::Vector2f pos);
+
+    [[maybe_unused]] void set_position(sf::Vector2f pos);
 	
 	sf::Vector2f get_position() const;
 	
@@ -55,7 +55,7 @@ public:
     
     void delete_figure();
     
-    bool is_available() const;
+    [[maybe_unused]] bool is_available() const;
     
     bool can_be_destroyed() const;
     

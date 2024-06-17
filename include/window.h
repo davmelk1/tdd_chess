@@ -4,7 +4,7 @@
 
 class GameWindow{
 public:
-    GameWindow(unsigned int window_width = static_cast<unsigned int>(constants::WINDOW_WIDTH),
+    explicit GameWindow(unsigned int window_width = static_cast<unsigned int>(constants::WINDOW_WIDTH),
                              unsigned int window_height = static_cast<unsigned int>(constants::WINDOW_WIDTH));
     
     void run();

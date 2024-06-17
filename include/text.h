@@ -10,7 +10,7 @@ public:
     
     [[nodiscard]] std::string get_text() const;
     
-    void set_font(const sf::Font& new_font);
+    [[maybe_unused]] void set_font(const sf::Font& new_font);
     
     sf::Font get_font() const;
     

@@ -12,7 +12,7 @@ void Cell::set_position(float x, float y) {
 	cell_rectangle.setPosition(x, y);
 }
 
-void Cell::set_position(sf::Vector2f pos) {
+[[maybe_unused]] void Cell::set_position(sf::Vector2f pos) {
     cell_rectangle.setPosition(pos);
 }
 
@@ -68,8 +68,10 @@ Figure* Cell::get_figure_pointer() const {
 
 bool Cell::mouse_is_on_this_cell(sf::Vector2i mouse_position) {
     auto bounds = cell_rectangle.getGlobalBounds();
-    return bounds.left < mouse_position.x && mouse_position.x < bounds.left + bounds.width &&
-           bounds.top < mouse_position.y && mouse_position.y < bounds.top + bounds.height;
+    return bounds.left < static_cast<float>(mouse_position.x) &&
+            static_cast<float>(mouse_position.x) < bounds.left + bounds.width &&
+            bounds.top < static_cast<float>(mouse_position.y) &&
+            static_cast<float>(mouse_position.y) < bounds.top + bounds.height;
 }
 
 void Cell::handle_mouse_hovering(const sf::Vector2i& pos) {
@@ -80,7 +82,7 @@ void Cell::draw_hover_ellipse(sf::RenderWindow& window) const {
     static sf::CircleShape hover_ellipse = [&](){
         sf::CircleShape ellipse;
         ellipse.setRadius(get_size().x / 4);
-        ellipse.setScale(0.4 * get_size().x / ellipse.getRadius(), 0.2 * get_size().y / ellipse.getRadius());
+        ellipse.setScale(0.4f * get_size().x / ellipse.getRadius(), 0.2f * get_size().y / ellipse.getRadius());
         ellipse.setOrigin(ellipse.getLocalBounds().width / 2, ellipse.getLocalBounds().height / 2);
         ellipse.setFillColor({80, 80, 80 });
         return ellipse;
@@ -100,7 +102,7 @@ void Cell::draw_press_ellipse(sf::RenderWindow& window) const {
 	static sf::CircleShape pressed_ellipse = [&](){
 		sf::CircleShape ellipse;
 		ellipse.setRadius(get_size().x / 4);
-		ellipse.setScale(0.4 * get_size().x / ellipse.getRadius(), 0.2 * get_size().y / ellipse.getRadius());
+		ellipse.setScale(0.4f * get_size().x / ellipse.getRadius(), 0.2f * get_size().y / ellipse.getRadius());
 		ellipse.setOrigin(ellipse.getLocalBounds().width / 2, ellipse.getLocalBounds().height / 2);
 		ellipse.setFillColor({40, 200, 30 });
 		return ellipse;
@@ -157,7 +159,7 @@ void Cell::reset_pressed() {
     is_cell_pressed = false;
 }
 
-bool Cell::is_available() const {
+[[maybe_unused]] bool Cell::is_available() const {
     return is_cell_available;
 }
 
@@ -184,7 +186,7 @@ void Cell::draw_destroyable(sf::RenderWindow& window) const {
     static sf::CircleShape destroyable_circle = [&](){
         sf::CircleShape ellipse;
         ellipse.setRadius(get_size().x / 4);
-        ellipse.setScale(0.4 * get_size().x / ellipse.getRadius(), 0.2 * get_size().y / ellipse.getRadius());
+        ellipse.setScale(0.4f * get_size().x / ellipse.getRadius(), 0.2f * get_size().y / ellipse.getRadius());
         ellipse.setOrigin(ellipse.getLocalBounds().width / 2, ellipse.getLocalBounds().height / 2);
         ellipse.setFillColor({200, 40, 30 });
         return ellipse;

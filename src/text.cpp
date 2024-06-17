@@ -8,7 +8,7 @@ std::string Text::get_text() const {
     return text.getString();
 }
 
-void Text::set_font(const sf::Font& new_font) {
+[[maybe_unused]] void Text::set_font(const sf::Font& new_font) {
     font = new_font;
     text.setFont(new_font);
 }

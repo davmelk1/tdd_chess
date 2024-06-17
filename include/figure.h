@@ -12,7 +12,7 @@ class Cell;
 
 class Figure{
 public:
-    Figure(ColorEnum color = White);
+    explicit Figure(ColorEnum color = White);
     
     void set_position_from_center_coordinates(float x, float y);
     
@@ -41,7 +41,7 @@ protected:
     ColorEnum color;
     sf::IntRect get_figure_rect_from_name_and_color(const std::string& name);
     bool is_in_initial_position{true};
-    bool set_available_if_so_and_return_status(Cell &cell, std::forward_list<Cell *> &available_moves) const;
+    static bool set_available_if_so_and_return_status(Cell &cell, std::forward_list<Cell *> &available_moves) ;
     bool set_destroyable_if_so_and_return_if_we_should_break(Cell &cell, std::forward_list<Cell *>& destroying_moves) const;
-    bool i_j_in_board_size(int i, int j) const;
+    static bool i_j_in_board_size(int i, int j) ;
 };

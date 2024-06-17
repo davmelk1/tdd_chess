@@ -41,7 +41,7 @@ public:
 	
 	void draw_labels(sf::RenderWindow& window) const;
     
-    Cell& at(std::pair<int, int>);
+    [[maybe_unused]] Cell& at(std::pair<int, int>);
 
 protected:
     std::array<std::array<Cell, constants::BOARD_SIZE>, constants::BOARD_SIZE> board;
