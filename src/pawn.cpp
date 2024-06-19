@@ -19,7 +19,7 @@ Pawn::get_all_available_moves(std::array<std::array<Cell, constants::BOARD_SIZE>
         return available_moves;
     available_moves.emplace_front(&board[i][j]);
     i += direction;
-    if (board[i][j].get_figure_pointer() || !is_in_initial_position)
+    if (board[i][j].get_figure_pointer() || !is_in_the_initial_position)
         return available_moves;
     available_moves.emplace_front(&board[i][j]);
     return available_moves;

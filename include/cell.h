@@ -67,10 +67,17 @@ public:
     void unset_destroyable();
     
     ColorEnum get_figure_color() const;
+
+    void set_cell_name(char letter, int index);
+
+    std::string get_cell_name() const;
+
 protected:
     ColorEnum color{White};
     sf::RectangleShape cell_rectangle;
     Figure* figure_ptr{nullptr};
+    char letter;
+    int index;
     
     bool mouse_is_on_this_cell(sf::Vector2i mouse_position);
     

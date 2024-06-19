@@ -3,6 +3,7 @@
 #include <SFML/Graphics.hpp>
 #include <array>
 #include <forward_list>
+#include <iostream>
 
 #include "cell.h"
 #include "constants.h"
@@ -43,12 +44,15 @@ public:
     
     [[maybe_unused]] Cell& at(std::pair<int, int>);
 
+    void show_moves();
+
 protected:
     std::array<std::array<Cell, constants::BOARD_SIZE>, constants::BOARD_SIZE> board;
 	sf::Vector2f board_start_position{};
 	int board_size{constants::BOARD_SIZE};
 	std::forward_list<Cell*> available_moves;
     std::forward_list<Cell*> destroying_moves;
+    std::forward_list<std::pair<std::string, std::string>> moves;
 
     ColorEnum order_color{White};
     bool without_order{false};
@@ -78,4 +82,6 @@ protected:
     void handle_cell_click(Cell *pCell);
 
     void move_cell_figure_to_selected_cell(Cell *pCell);
+
+    void save_move(Cell *cell1_ptr, Cell *cell2_ptr);
 };

@@ -58,7 +58,7 @@ sf::Vector2f Figure::get_size() const {
 }
 
 void Figure::set_initial_position_to_false() {
-    is_in_initial_position = false;
+    is_in_the_initial_position = false;
 }
 
 ColorEnum Figure::get_color() const {
@@ -83,4 +83,8 @@ bool Figure::set_destroyable_if_so_and_return_if_we_should_break(Cell &cell, std
 
 bool Figure::i_j_in_board_size(int i, int j) {
     return i >= 0 && j >= 0 && i < constants::BOARD_SIZE && j < constants::BOARD_SIZE;
+}
+
+bool Figure::is_in_initial_position() const {
+    return is_in_the_initial_position;
 }

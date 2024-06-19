@@ -41,13 +41,13 @@ void Cell::set_color(ColorEnum color_) {
 
 void Cell::draw(sf::RenderWindow& window) const {
     window.draw(cell_rectangle);
+    if (is_destroyable)
+        draw_destroyable(window);
     if (figure_ptr) {
         if (is_hovered)
             draw_hover_ellipse(window);
 		if (is_cell_pressed)
 			draw_press_ellipse(window);
-        if (is_destroyable)
-            draw_destroyable(window);
         figure_ptr->draw(window);
     } else {
         if (is_cell_available)
@@ -198,4 +198,13 @@ ColorEnum Cell::get_figure_color() const {
     if (figure_ptr)
         return figure_ptr->get_color();
     return {};
+}
+
+std::string Cell::get_cell_name() const {
+    return letter + std::to_string(index);
+}
+
+void Cell::set_cell_name(char letter_, int index_) {
+    letter = letter_;
+    index = index_;
 }

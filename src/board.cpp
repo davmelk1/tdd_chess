@@ -6,6 +6,7 @@ Board::Board() {
     for (int i = 0; i < get_size(); ++i)
         for (int j = 0; j < get_size(); ++j) {
             board[i][j].set_color((i + j) % 2 ? White : Black);
+            board[i][j].set_cell_name((char)(65+i), j + 1);
             board[i][j].set_size({constants::CELL_WIDTH, constants::CELL_WIDTH});
             board[i][j].set_position(board_start_position.x + constants::CELL_WIDTH * static_cast<float>(j),
                                      board_start_position.y + constants::CELL_WIDTH * static_cast<float>(i));
@@ -170,8 +171,12 @@ void Board::handle_cell_click(Cell* clicked_cell) {
             move->set_can_be_destroyed();
     } else {
         if (std::find(available_moves.begin(), available_moves.end(), clicked_cell) != available_moves.end()) {
+            save_move(selected_cell, clicked_cell);
+            show_moves();
             move_cell_figure_to_selected_cell(clicked_cell);
         } else if (std::find(destroying_moves.begin(), destroying_moves.end(), clicked_cell) != destroying_moves.end()) {
+            save_move(selected_cell, clicked_cell);
+            show_moves();
             clicked_cell->delete_figure();
             move_cell_figure_to_selected_cell(clicked_cell);
         }
@@ -184,5 +189,15 @@ void Board::move_cell_figure_to_selected_cell(Cell* clicked_cell) {
     order_color = (order_color == White)? Black : White;
     clicked_cell->add_figure(selected_cell->get_figure_pointer());
     selected_cell->delete_figure();
+}
+
+void Board::save_move(Cell *cell1_ptr, Cell *cell2_ptr) {
+    moves.emplace_front(cell1_ptr->get_cell_name(), cell2_ptr->get_cell_name());
+}
+
+void Board::show_moves() {
+    std::transform(moves.cbegin(), moves.cend(), std::ostream_iterator<std::string>(std::cerr), [](auto move) {
+        return '(' + move.first + ", " + move.second + ")\n";
+    });
 }
 

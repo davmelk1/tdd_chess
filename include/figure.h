@@ -33,6 +33,8 @@ public:
     
     void set_initial_position_to_false();
     
+    bool is_in_initial_position() const;
+    
     ColorEnum get_color() const;
 
 protected:
@@ -40,7 +42,7 @@ protected:
     sf::Texture texture;
     ColorEnum color;
     sf::IntRect get_figure_rect_from_name_and_color(const std::string& name);
-    bool is_in_initial_position{true};
+    bool is_in_the_initial_position{true};
     static bool set_available_if_so_and_return_status(Cell &cell, std::forward_list<Cell *> &available_moves) ;
     bool set_destroyable_if_so_and_return_if_we_should_break(Cell &cell, std::forward_list<Cell *>& destroying_moves) const;
     static bool i_j_in_board_size(int i, int j) ;
